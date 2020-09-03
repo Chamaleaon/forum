@@ -21,11 +21,10 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/" to="/">
+      <Link color="inherit"  to="/">
         Your Website
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -64,8 +63,6 @@ export default function SignUp() {
   }
 
   const handleSignUp = ()=>{
-    // "email":"356@qq.com",
-    // "homePage":"howay.site"
     signUp({
       name,
       password,
@@ -97,17 +94,6 @@ export default function SignUp() {
                 label="User Name"
                 autoFocus
                 onChange = {handleNameChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address ---可不填"
-                name="email"
-                autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>

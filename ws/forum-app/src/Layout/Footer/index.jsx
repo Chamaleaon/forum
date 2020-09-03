@@ -5,8 +5,8 @@ import {withRouter} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import ModeCommentIcon from '@material-ui/icons/ModeComment';
+import PersonIcon from '@material-ui/icons/Person';
 
 const useStyles = makeStyles({
   root: {
@@ -41,8 +41,8 @@ function SimpleBottomNavigation(props) {
       showLabels
       className={classes.root}
     > 
-      <BottomNavigationAction label="News" icon={<RestoreIcon />} />  
-      <BottomNavigationAction label="Mine" icon={<LocationOnIcon />} />
+      <BottomNavigationAction label="News" icon={<ModeCommentIcon />} />  
+      <BottomNavigationAction label="Mine" icon={<PersonIcon />} />
     </BottomNavigation>
   );
 }

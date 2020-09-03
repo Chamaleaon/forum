@@ -3,10 +3,11 @@ export function signIn(data) {
     body: JSON.stringify(data),
     method: "POST",
     headers: {
-      'content-type': 'multipart/form-data'
+      'content-type': 'application/x-www-form-urlencoded'
     },
   })
     .then((res) => {
+      console.log(res)
       return res.json();
     })
     .catch((err) => {
@@ -28,3 +29,4 @@ export function signUp(data){
     console.error(err)
   })
 }
+

@@ -20,11 +20,10 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/" to="/">
+      <Link color="inherit" to="/">
         Your Website
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -52,22 +51,24 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
-  let [username, setUsername] = useState("");
+  let [name, setName] = useState("");
   let [password, setPassword] = useState("");
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setName(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleSignIn = () => {
-    signIn({
-      username,
+  const handleSignIn = async () => {
+    const res = await signIn({
+      name,
       password,
     });
+
+    console.log(res);
   };
 
   return (
@@ -87,7 +88,7 @@ export default function SignIn() {
             required
             fullWidth
             id="username"
-            label="username"
+            label="User Name"
             name="username"
             autoComplete="email"
             autoFocus
