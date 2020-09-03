@@ -1,23 +1,22 @@
 export function signIn(data) {
-  fetch("/user/login", {
-    body: JSON.stringify(data),
+  return fetch("/user/login", {
+    body: `name=${data.name}&password=${data.password}`,
     method: "POST",
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
     },
   })
     .then((res) => {
-      console.log(res)
       return res.json();
     })
     .catch((err) => {
-      console.error(err)
+      console.error(err) 
     });
 }
 
 
 export function signUp(data){
-  fetch("/user/register",{
+  return fetch("/user/register",{
     body:JSON.stringify(data),
     method:"POST",
     headers: {

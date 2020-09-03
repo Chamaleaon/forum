@@ -12,8 +12,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { signIn } from "../../../api/userSign";
 
 function Copyright() {
@@ -48,11 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
 
   let [name, setName] = useState("");
   let [password, setPassword] = useState("");
+  let [open, setOpen] = React.useState(false);
 
   const handleUsernameChange = (e) => {
     setName(e.target.value);
@@ -68,8 +71,25 @@ export default function SignIn() {
       password,
     });
 
-    console.log(res);
+    if (res.RE_DESC === "SUCCESS") {
+      setOpen(true);
+      setTimeout(() => {
+        props.history.push("/");
+      }, 1000);
+    }
   };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -136,6 +156,14 @@ export default function SignIn() {
       <Box mt={8}>
         <Copyright />
       </Box>
+      {/* message */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          SignIn Success!
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }
+
+export default withRouter(SignIn);
