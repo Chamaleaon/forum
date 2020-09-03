@@ -1,8 +1,12 @@
 package com.howay.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +17,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UserDao {
+	
+	@Select("select * from user where name=#{name}")
+	public List<Map<String,Object>> getUserInfo(@Param(value = "name") String name);
 	
 	@Insert("insert into user(name,password,email,homePage) VALUES(#{name},#{password},#{email},#{homePage})")
 	public int insertUser(
