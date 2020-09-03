@@ -8,3 +8,8 @@ login/register
   - header
   - maim
   - footer 
+
+
+### 基本路由
+ - 主页 ->帖子/我的->Login->register->主页
+  
