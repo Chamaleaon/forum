@@ -1,8 +1,14 @@
-const { override, addLessLoader,overrideDevServer } = require("customize-cra");
+const {
+  override,
+  addLessLoader,
+  addDecoratorsLegacy,
+} = require("customize-cra");
+
 module.exports = override(
   addLessLoader({
     lessOptions: {
       javascriptEnabled: true,
     },
-  })
+  }),
+  addDecoratorsLegacy()
 );

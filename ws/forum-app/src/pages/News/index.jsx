@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
 
-export default class News extends Component {
+import {connect} from 'react-redux'
+
+import {getAllEssay} from '../../redux/actions/essay'
+
+@connect((state)=>({essay:state.essay}),{getAllEssay})
+class News extends Component {
+  componentDidMount() {
+    this.props.getAllEssay()
+  }
+  
   render() {
     return (
       <div>
@@ -9,3 +18,5 @@ export default class News extends Component {
     )
   }
 }
+
+export default News

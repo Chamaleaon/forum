@@ -1,0 +1,1 @@
+export const RECEIVE_ESSAY = 'RECEIVE_ESSAY'
