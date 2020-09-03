@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.howay.dao.EssayDao;
 import com.howay.dao.UserDao;
@@ -56,6 +57,32 @@ public class EssayController {
 			return res.toJSONString();
 		}
 		res = JsonUtil.toJSONObject(1002, "用户不存在");
+		return res.toJSONString();
+	}
+	
+	/**
+	  * 查找所有贴子
+	 */
+	@CrossOrigin
+	@RequestMapping(value = "/all", method = { RequestMethod.POST })
+	public String getAll() {
+		List<Map<String,Object>> list = essayDao.getAll();
+		JSONArray ja = JsonUtil.toJSONArray(list);
+		JSONObject res = JsonUtil.toJSONObject(0, "SUCCESS");
+		res.put("RES", ja);
+		return res.toJSONString();
+	}
+	
+	/**
+	  * 查找所有贴子
+	 */
+	@CrossOrigin
+	@RequestMapping(value = "/byId", method = { RequestMethod.POST })
+	public String getByID(@RequestBody JSONObject req) {
+		List<Map<String,Object>> list = essayDao.byId(req.getIntValue("id"));
+		JSONArray ja = JsonUtil.toJSONArray(list);
+		JSONObject res = JsonUtil.toJSONObject(0, "SUCCESS");
+		res.put("RES", ja);
 		return res.toJSONString();
 	}
 
