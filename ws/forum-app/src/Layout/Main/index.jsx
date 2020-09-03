@@ -1,5 +1,8 @@
 import React,{Component} from 'react'
 
+import {Route} from 'react-router-dom'
+import News from '../../pages/News'
+import Mine from '../../pages/Mine'
 
 import './index.less'
 
@@ -7,18 +10,9 @@ export default class Main extends Component{
   render(){
     return (
       <div className="wrapper">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non iusto commodi fuga voluptas quis? Amet soluta earum, ducimus blanditiis dolor quia, iste ipsum, ipsa nemo quam velit necessitatibus quidem aperiam!
+        <Route path="/" component={News} exact />
+        <Route path="/layout/news" component={News} />
+        <Route path="/layout/mine" component={Mine} />
       </div>
     )
   }
