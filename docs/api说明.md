@@ -5,7 +5,8 @@
 <a href="#用户登录" title="用户登录">登录</a><br />
 <a href="#发帖" title="发帖">发帖</a><br />
 <a href="#查找所有贴子" title="查找所有贴子">查找所有贴子</a><br />
-<a href="#通过id查找贴子" title="通过id查找贴子">通过id查找贴子</a><br />
+<a href="#通过用户id查找贴子" title="通过用户id查找贴子">通过用户id查找贴子</a><br />
+<a href="#发言" title="发言">写一级评论</a><br />
 
 ## 用户相关API
 ### 用户注册
@@ -51,8 +52,23 @@
     返回内容：
         {"RES":[{"creation_time":"2020-09-03 21:54:41","update_time":"2020-09-03 at 21:54:41 CST","publisher":5,"e_id":1,"label":"test","title":"测试","content":"这是测试内容，this is a test essay"},{"creation_time":"2020-09-03 21:56:49","update_time":"2020-09-03 21:56:49","publisher":2,"e_id":3,"label":"test","title":"测试3","content":"这是测试内容，this is a test essay"}],"RE_DESC":"SUCCESS","RE_CODE":0}
         其中RES为结果，即所有贴子的集合
-### 通过id查找贴子
+### 通过用户id查找贴子
     地址：/essay/byId
     参数：{"id":1}
     返回内容：
         {"RES":[{"creation_time":"2020-09-03 21:55:39","update_time":"2020-09-03 at 21:55:39 CST","publisher":1,"e_id":2,"label":"test","title":"测试2","content":"这是测试内容，this is a test essay"}],"RE_DESC":"SUCCESS","RE_CODE":0}
+
+
+## 一级评论相关API
+### 发言
+    地址：/floor/write
+    参数：
+        {
+            "essay":1,  //当前所在贴子id
+            "content":"这是测试内容，this is a test essay",
+            "publisher":7, //当前评论人id，如果是楼主，前端应显示
+            "level":1 //当前所在楼层，为当前贴子最后一楼level加1
+        }
+    返回：
+        good:{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}

@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.howay.dao.EssayDao;
+import com.howay.dao.FloorDao;
 import com.howay.dao.UserDao;
 import com.howay.util.JsonUtil;
 
 /**
-  * 贴子控制层
- * 
- * @author howay
- * @since 2020/9/3
- */
+ * 一级评论、层主发言控制层
+* 
+* @author howay
+* @since 2020/9/3
+*/
 
 @RestController
-@RequestMapping(value = "/essay")
-public class EssayController {
+@RequestMapping(value = "/floor")
+public class FloorController {
 	
 	@Autowired
 	EssayDao essayDao;
@@ -35,54 +35,31 @@ public class EssayController {
 	@Autowired
 	UserDao userDao;
 	
+	@Autowired
+	FloorDao floorDao;
 	/**
-	 * 写贴子
+	 * 写评论
 	 */
 	@CrossOrigin
-	@RequestMapping(value = "/writePost", method = { RequestMethod.POST })
+	@RequestMapping(value = "/write", method = { RequestMethod.POST })
 	public String writePost(@RequestBody JSONObject req) {
 		JSONObject res;
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
 		String time = formatter.format(date);
 		
-		String title = req.getString("title");
+		int essay = req.getIntValue("essay");
 		String content = req.getString("content");
 		int publisher = req.getIntValue("publisher");
-		String label = req.getString("label");
+		int level = req.getIntValue("level");
 		List<Map<String,Object>> list = userDao.getUserInfoById(publisher);
-		if(list.size()>0) { //用户存在
-			essayDao.insertUser(title, content, time, time, publisher, label);
+		List<Map<String,Object>> list2 = essayDao.byEId(essay);
+		if(list.size()>0 && list2.size()>0) { //用户存在且文章存在
+			floorDao.insertUser(essay, content, time, time, publisher, level);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
 			return res.toJSONString();
 		}
-		res = JsonUtil.toJSONObject(1002, "用户不存在");
-		return res.toJSONString();
-	}
-	
-	/**
-	  * 查找所有贴子
-	 */
-	@CrossOrigin
-	@RequestMapping(value = "/all", method = { RequestMethod.POST })
-	public String getAll() {
-		List<Map<String,Object>> list = essayDao.getAll();
-		JSONArray ja = JsonUtil.toJSONArray(list);
-		JSONObject res = JsonUtil.toJSONObject(0, "SUCCESS");
-		res.put("RES", ja);
-		return res.toJSONString();
-	}
-	
-	/**
-	  * 通过用户id查找贴子
-	 */
-	@CrossOrigin
-	@RequestMapping(value = "/byId", method = { RequestMethod.POST })
-	public String getByID(@RequestBody JSONObject req) {
-		List<Map<String,Object>> list = essayDao.byId(req.getIntValue("id"));
-		JSONArray ja = JsonUtil.toJSONArray(list);
-		JSONObject res = JsonUtil.toJSONObject(0, "SUCCESS");
-		res.put("RES", ja);
+		res = JsonUtil.toJSONObject(1002, "用户或者文章不存在");
 		return res.toJSONString();
 	}
 

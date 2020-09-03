@@ -24,6 +24,9 @@ public interface EssayDao {
 	@Select("select * from essay where publisher=#{u_id}")
 	public List<Map<String,Object>> byId(@Param(value = "u_id") int u_id);
 	
+	@Select("select * from essay where publisher=#{e_id}")
+	public List<Map<String,Object>> byEId(@Param(value = "e_id") int e_id);
+	
 	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label) "
 			+ "VALUES(#{title},#{content},#{creation_time},#{update_time},#{publisher},#{label})")
 	public int insertUser(
