@@ -1,13 +1,18 @@
 package com.howay.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import com.howay.util.Builder;
 /**
- * 用户类
+  * 用户类
  * 
  * @author howay
  * @since 2020/9/2
  */
 
+@Entity
+@Table(name="user")
 public class User {
 	
 	private int u_id;  //id pk nn
