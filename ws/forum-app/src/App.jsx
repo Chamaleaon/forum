@@ -13,6 +13,7 @@ import "fontsource-roboto";
 import Layout from "./Layout";
 import SignIn from './pages/LoginAndRegister/SignIn'
 import SignUp from './pages/LoginAndRegister/SignUp'
+import AddEssay from './pages/AddEssay'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
       <Route path="/layout" component={Layout} />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/addessay" component={AddEssay} />
     </Router>
   );
 }
