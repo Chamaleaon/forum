@@ -58,24 +58,25 @@ public class UserController {
 	 */
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = { RequestMethod.POST })
-	public String login(String name,String password,HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+	public String login(String name,String password,HttpSession session,HttpServletRequest request,HttpServletResponse response) {
 		
 		JSONObject res;
 		List<Map<String,Object>> list = userDao.getUserInfo(name);
 		if(list.size()>0) {
 			if(list.get(0).get("password").equals(password)) {
 				//System.out.println(name);
+				int maxAge = -1;
 				session.setAttribute("cl_name", name);
 				Cookie nameCookie = new Cookie("cl_name",name);
-				nameCookie.setPath(request.getContextPath());
-				nameCookie.setMaxAge(-1); 
+				nameCookie.setPath("/");
+				nameCookie.setMaxAge(maxAge); 
 				response.addCookie(nameCookie);
 				
 				String id = list.get(0).get("u_id").toString();
 				session.setAttribute("cl_id", id);
 				Cookie idCookie = new Cookie("cl_id",id);
-				idCookie.setPath(request.getContextPath());
-				idCookie.setMaxAge(-1); 
+				idCookie.setPath("/");
+				idCookie.setMaxAge(maxAge); 
 				response.addCookie(idCookie);
 				
 				//System.out.println("ok");

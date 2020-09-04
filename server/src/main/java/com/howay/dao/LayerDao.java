@@ -12,26 +12,24 @@ import org.springframework.stereotype.Repository;
 /**
  * 
  * @author howay
- * @since 2020/9/3
+ * @since 2020/9/4
  */
 @Repository
 @Mapper
-public interface FloorDao {
+public interface LayerDao {
 	
-	@Select("select * from floor where f_id=#{f_id}")
-	public List<Map<String,Object>> byId(@Param(value = "f_id") int f_id);
+	@Select("select * from layer where floor=#{floor}")
+	public List<Map<String,Object>> findByFloorID(@Param(value = "floor") int floor);
 	
-	@Select("select * from floor where essay=#{essay}")
-	public List<Map<String,Object>> findByEID(@Param(value = "essay") int essay);
-	
-	@Insert("insert into floor(essay,content,creation_time,update_time,publisher,level) "
-			+ "VALUES(#{essay},#{content},#{creation_time},#{update_time},#{publisher},#{level})")
+	@Insert("insert into layer(floor,content,creation_time,update_time,publisher,responder,level) "
+			+ "VALUES(#{floor},#{content},#{creation_time},#{update_time},#{publisher},#{responder},#{level})")
 	public int insert(
-		@Param(value = "essay") int essay,
+		@Param(value = "floor") int floor,
 		@Param(value = "content") String content,
 		@Param(value = "creation_time") String creation_time,
 		@Param(value = "update_time") String update_time,
 		@Param(value = "publisher") int publisher,
+		@Param(value = "responder") int responder,
 		@Param(value = "level") int level
 	);
 

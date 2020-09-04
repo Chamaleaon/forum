@@ -6,7 +6,9 @@
 <a href="#发帖" title="发帖">发帖</a><br />
 <a href="#查找所有贴子" title="查找所有贴子">查找所有贴子</a><br />
 <a href="#通过用户id查找贴子" title="通过用户id查找贴子">通过用户id查找贴子</a><br />
+<a href="#查找某个贴子内容一级全部一级评论和二级评论" title="查询单个贴子">查询单个贴子</a><br />
 <a href="#发言" title="发言">写一级评论</a><br />
+<a href="#回复" title="回复">写二级评论</a><br />
 
 ## 用户相关API
 ### 用户注册
@@ -57,7 +59,64 @@
     参数：{"id":1}
     返回内容：
         {"RES":[{"creation_time":"2020-09-03 21:55:39","update_time":"2020-09-03 at 21:55:39 CST","publisher":1,"e_id":2,"label":"test","title":"测试2","content":"这是测试内容，this is a test essay"}],"RE_DESC":"SUCCESS","RE_CODE":0}
-
+### 查找某个贴子内容一级全部一级评论和二级评论
+    地址：/essay/find
+    参数：{"e_id":1} //该贴子id
+    返回内容：
+    {
+        "creation_time": "2020-09-03 21:54:41",
+        "update_time": "2020-09-03 21:54:41",
+        "RE_DESC": "SUCCESS",
+        "publisher": 5,
+        "e_id": 1,
+        "label": "test",
+        "title": "测试",
+        "floor": [   //floor为该贴子下的一级评论
+            {
+                "creation_time": "2020-09-03 23:22:17",
+                "update_time": "2020-09-03 23:22:17",
+                "level": 1,
+                "essay": 1,
+                "publisher": 7,
+                "f_id": 1,
+                "content": "这是测试内容，this is a test essay",
+                "layer": [ //layer为该层发言下的二级评论
+                    {
+                        "creation_time": "2020-09-04 10:37:05",
+                        "update_time": "2020-09-04 10:37:05",
+                        "level": 1,
+                        "publisher": 1,
+                        "responder": 7,
+                        "l_id": 1,
+                        "floor": 1,
+                        "content": "这是测试内容，this is a test essay"
+                    },
+                    {
+                        "creation_time": "2020-09-04 10:47:24",
+                        "update_time": "2020-09-04 10:47:24",
+                        "level": 2,
+                        "publisher": 2,
+                        "responder": 1,
+                        "l_id": 2,
+                        "floor": 1,
+                        "content": "这是测试内容，this is a test essay"
+                    }
+                ]
+            },
+            {
+                "creation_time": "2020-09-03 23:28:34",
+                "update_time": "2020-09-03 23:28:34",
+                "level": 2,
+                "essay": 1,
+                "publisher": 1,
+                "f_id": 2,
+                "content": "这是测试内容，this is a test essay",
+                "layer": []
+            }
+        ],
+        "RE_CODE": 0,
+        "content": "这是测试内容，this is a test essay"
+    }
 
 ## 一级评论相关API
 ### 发言
@@ -72,3 +131,15 @@
     返回：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
         bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}
+
+## 二级评论相关API
+### 回复
+    地址：/layer/write
+    参数：
+    {
+        "floor":1,  //这是当前回复所在一级评论的id
+        "content":"这是测试内容，this is a test essay",
+        "publisher":1, //当前评论人id
+        "responder":7, //被回复人id
+        "level":1 //所在层数，为当前楼层最后一层加1
+    }

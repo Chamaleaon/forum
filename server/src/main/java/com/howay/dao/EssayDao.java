@@ -24,12 +24,12 @@ public interface EssayDao {
 	@Select("select * from essay where publisher=#{u_id}")
 	public List<Map<String,Object>> byId(@Param(value = "u_id") int u_id);
 	
-	@Select("select * from essay where publisher=#{e_id}")
+	@Select("select * from essay where e_id=#{e_id}")
 	public List<Map<String,Object>> byEId(@Param(value = "e_id") int e_id);
 	
 	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label) "
 			+ "VALUES(#{title},#{content},#{creation_time},#{update_time},#{publisher},#{label})")
-	public int insertUser(
+	public int insert(
 		@Param(value = "title") String title,
 		@Param(value = "content") String content,
 		@Param(value = "creation_time") String creation_time,
