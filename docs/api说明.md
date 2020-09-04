@@ -3,6 +3,7 @@
 ## 目录
 <a href="#用户注册" title="用户注册">注册</a><br />
 <a href="#用户登录" title="用户登录">登录</a><br />
+<a href="#通过id查找用户信息" title="通过id查找用户信息">通过id查找用户信息</a><br />
 <a href="#发帖" title="发帖">发帖</a><br />
 <a href="#查找所有贴子" title="查找所有贴子">查找所有贴子</a><br />
 <a href="#通过用户id查找贴子" title="通过用户id查找贴子">通过用户id查找贴子</a><br />
