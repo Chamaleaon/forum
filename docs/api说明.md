@@ -32,6 +32,19 @@
     返回内容：
         good：{"RE_DESC":"SUCCESS","RE_CODE":0}
         bad：{"RE_DESC":"用户名或密码错误","RE_CODE":1002}
+### 通过id查找用户信息
+    地址：/user/info
+    参数：{"u_id":1}
+    返回：
+        good:
+            {
+                "RE_DESC": "SUCCESS",
+                "name": "zs",
+                "homePage": "howay.site", //如果不存在这个字段则表示用户之前没有填写这个
+                "RE_CODE": 0,
+                "email": "356@qq.com" //如果不存在这个字段则表示用户之前没有填写这个
+            }
+        bad:{"RE_DESC":"用户不存在","RE_CODE":1002}
 
 ## 贴子相关API
 ### 发帖
@@ -118,6 +131,8 @@
         "content": "这是测试内容，this is a test essay"
     }
 
+    bad：{"RE_DESC":"贴子不存在","RE_CODE":1002}
+
 ## 一级评论相关API
 ### 发言
     地址：/floor/write
@@ -143,3 +158,6 @@
         "responder":7, //被回复人id
         "level":1 //所在层数，为当前楼层最后一层加1
     }
+    返回：
+        good:{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}

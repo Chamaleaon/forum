@@ -92,7 +92,27 @@ public class UserController {
 		}
 		res = JsonUtil.toJSONObject(1002, "用户名或密码错误");
 		return res.toJSONString();
-		
 	}
+	
+	/**
+	 * 根据用户id获取用户信息
+	 */
+	@CrossOrigin
+	@RequestMapping(value = "/info", method = { RequestMethod.POST })
+	public String getInfoById(@RequestBody JSONObject req) {
+		int u_id = req.getIntValue("u_id");
+		JSONObject res;
+		List<Map<String,Object>> list = userDao.getUserInfoById(u_id);
+		if(list.size()>0) {
+			res = JsonUtil.toJSONObject(0, "SUCCESS");
+			for(Map<String,Object> user:list) {
+				res.putAll(user);
+			}
+			return res.toJSONString();
+		}
+		res = JsonUtil.toJSONObject(1002, "用户不存在");
+		return res.toJSONString();
+	}
+		
 
 }
