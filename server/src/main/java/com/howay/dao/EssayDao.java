@@ -18,13 +18,13 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface EssayDao {
 
-	@Select("select * from essay")
+	@Select("select a.*,b.name as publisher_name from essay a,user b where a.publisher=b.u_id")
 	public List<Map<String,Object>> getAll();
 	
-	@Select("select * from essay where publisher=#{u_id}")
+	@Select("select a.*,b.name as publisher_name from essay a,user b where a.publisher=#{u_id} and a.publisher=b.u_id")
 	public List<Map<String,Object>> byId(@Param(value = "u_id") int u_id);
 	
-	@Select("select * from essay where e_id=#{e_id}")
+	@Select("select a.*,b.name as publisher_name from essay a,user b where e_id=#{e_id} and a.publisher=b.u_id")
 	public List<Map<String,Object>> byEId(@Param(value = "e_id") int e_id);
 	
 	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label) "

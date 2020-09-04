@@ -3,6 +3,7 @@
 ## 目录
 <a href="#用户注册" title="用户注册">注册</a><br />
 <a href="#用户登录" title="用户登录">登录</a><br />
+<a href="#通过id查找用户信息" title="通过id查找用户信息">通过id查找用户信息</a><br />
 <a href="#发帖" title="发帖">发帖</a><br />
 <a href="#查找所有贴子" title="查找所有贴子">查找所有贴子</a><br />
 <a href="#通过用户id查找贴子" title="通过用户id查找贴子">通过用户id查找贴子</a><br />
@@ -32,6 +33,19 @@
     返回内容：
         good：{"RE_DESC":"SUCCESS","RE_CODE":0}
         bad：{"RE_DESC":"用户名或密码错误","RE_CODE":1002}
+### 通过id查找用户信息
+    地址：/user/info
+    参数：{"u_id":1}
+    返回：
+        good:
+            {
+                "RE_DESC": "SUCCESS",
+                "name": "zs",
+                "homePage": "howay.site", //如果不存在这个字段则表示用户之前没有填写这个
+                "RE_CODE": 0,
+                "email": "356@qq.com" //如果不存在这个字段则表示用户之前没有填写这个
+            }
+        bad:{"RE_DESC":"用户不存在","RE_CODE":1002}
 
 ## 贴子相关API
 ### 发帖
@@ -118,6 +132,8 @@
         "content": "这是测试内容，this is a test essay"
     }
 
+    bad：{"RE_DESC":"贴子不存在","RE_CODE":1002}
+
 ## 一级评论相关API
 ### 发言
     地址：/floor/write
@@ -143,5 +159,11 @@
         "responder":7, //被回复人id
         "level":1 //所在层数，为当前楼层最后一层加1
     }
+<<<<<<< HEAD
 
 
+=======
+    返回：
+        good:{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}
+>>>>>>> cd35f973d483cc8f721d775da2b62eaff2d6863e

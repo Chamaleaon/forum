@@ -18,10 +18,10 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface FloorDao {
 	
-	@Select("select * from floor where f_id=#{f_id}")
+	@Select("select a.*,b.name as publisher_name from floor a,user b where f_id=#{f_id} and a.publisher=b.u_id")
 	public List<Map<String,Object>> byId(@Param(value = "f_id") int f_id);
 	
-	@Select("select * from floor where essay=#{essay}")
+	@Select("select a.*,b.name as publisher_name from floor a,user b where essay=#{essay} and a.publisher=b.u_id")
 	public List<Map<String,Object>> findByEID(@Param(value = "essay") int essay);
 	
 	@Insert("insert into floor(essay,content,creation_time,update_time,publisher,level) "

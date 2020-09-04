@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserDao {
 	
-	@Select("select * from user where u_id=#{u_id}")
+	@Select("select name,email,homePage from user where u_id=#{u_id}")
 	public List<Map<String,Object>> getUserInfoById(@Param(value = "u_id") int u_id);
 	
 	@Select("select * from user where name=#{name}")

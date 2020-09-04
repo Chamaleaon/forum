@@ -18,7 +18,10 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface LayerDao {
 	
-	@Select("select * from layer where floor=#{floor}")
+	@Select("select m.*,n.name as responder_name from ("
+			+ "select a.*,b.name as publisher_name FROM "
+			+ "layer a,user b where a.publisher=b.u_id) m,"
+			+ "user n where m.responder=n.u_id and m.floor=#{floor}")
 	public List<Map<String,Object>> findByFloorID(@Param(value = "floor") int floor);
 	
 	@Insert("insert into layer(floor,content,creation_time,update_time,publisher,responder,level) "
