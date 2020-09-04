@@ -159,11 +159,6 @@
         "responder":7, //被回复人id
         "level":1 //所在层数，为当前楼层最后一层加1
     }
-<<<<<<< HEAD
-
-
-=======
     返回：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
         bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}
->>>>>>> cd35f973d483cc8f721d775da2b62eaff2d6863e

@@ -1,14 +1,75 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import {Link} from 'react-router-dom'
+import { connect } from "react-redux";
+import { getMyEssay } from "../../redux/actions/essay";
+import { Link } from "react-router-dom";
 
-export default class Mine extends Component {
+import Button from "@material-ui/core/Button";
+
+import List from "../../components/List";
+
+import "./index.less";
+
+@connect((state) => ({ myEssay: state.essay.myEssay }), { getMyEssay })
+class Mine extends Component {
+  handleSearchMine = () => {
+    this.props.getMyEssay({
+      id: this.publisherId,
+    });
+  };
+  // publisherId = null; //实例上的属性可以不写
+
+  handleLogout = () => {
+    function exit() {
+      //拿到cookie
+      var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+      if (keys) {
+        for (var i = keys.length; i--; )
+          document.cookie =
+            keys[i] + "=0;expires=" + new Date(0).toUTCString() + "; path=/";
+      }
+    }
+    exit();
+
+    this.setState({});
+  };
+
   render() {
+    const cookieArr = document.cookie.split("=");
+    const publisherId = 1 * cookieArr[cookieArr.length - 1];
+    this.publisherId = publisherId;
     return (
-      <div>
-        Mine
-        <Link to="/signin">去登陆</Link>
-      </div>
-    )
+      <>
+        <List essay={this.props.myEssay} />
+        <div className="option-in-mine">
+          {publisherId ? (
+            <>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSearchMine}
+              >
+                搜索我的帖子
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleLogout}
+              >
+                下号
+              </Button>
+            </>
+          ) : (
+            <Link to="/signin">
+              <Button variant="contained" color="primary">
+                还没有上号，去登陆
+              </Button>
+            </Link>
+          )}
+        </div>
+      </>
+    );
   }
 }
+
+export default Mine;

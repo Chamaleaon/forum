@@ -1,9 +1,10 @@
 //constants
 import {RECEIVE_ESSAY} from '../constants/essay'
-
+import {RECEIVE_MY_ESSAY} from '../constants/essay'
 
 //api function 
 import {reqAllEssay} from '../../api/essay'
+import {reqMyEssay} from '../../api/essay'
 
 
 
@@ -24,6 +25,22 @@ export function getAllEssay(){
   }
 }
 
+
+//myEssay 
+function getMyEssaySync(data){
+  return {
+    type:RECEIVE_MY_ESSAY,
+    data 
+  }
+}
+
+export function getMyEssay(data){
+  return dispatch => {
+    reqMyEssay(data).then(res =>{
+      dispatch(getMyEssaySync(res.RES))
+    }).catch(()=>{})
+  }
+}
 
 
 

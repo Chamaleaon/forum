@@ -21,4 +21,6 @@ login/register
 ### redux 数据管理 
 - redux 管理essay 数据 
 - 展示essay
-- 发帖
+- 发帖 
+- 去掉mine中登录按钮
+- 按id搜索帖子 

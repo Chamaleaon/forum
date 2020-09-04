@@ -46,7 +46,6 @@ export default function FormPropsTextFields(props) {
       label,
       publisher: 1*cookieArr[cookieArr.length-1],
     };
-    console.log(data)
     const res = await reqPublishEssay(data);
     if (res.RE_DESC === "SUCCESS") {
       setOpen(true)
