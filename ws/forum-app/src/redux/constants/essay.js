@@ -1,2 +1,3 @@
 export const RECEIVE_ESSAY = 'RECEIVE_ESSAY'
 export const RECEIVE_MY_ESSAY = 'RECEIVE_MY_ESSAY'
+export const REMOVE_MY_ESSAY = 'REMOVE_MY_ESSAY'

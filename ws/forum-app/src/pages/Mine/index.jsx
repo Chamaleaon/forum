@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { getMyEssay } from "../../redux/actions/essay";
+import { getMyEssay,removeMyessaySync } from "../../redux/actions/essay";
 import { Link } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 
-import List from "../../components/List";
+import List from "../../components/NewsList";
 
 import "./index.less";
 
-@connect((state) => ({ myEssay: state.essay.myEssay }), { getMyEssay })
+@connect((state) => ({ myEssay: state.essay.myEssay }), { getMyEssay,removeMyessaySync })
 class Mine extends Component {
   handleSearchMine = () => {
     this.props.getMyEssay({
@@ -30,7 +30,8 @@ class Mine extends Component {
       }
     }
     exit();
-
+    //清空redux中myEssay
+    this.props.removeMyessaySync()
     this.setState({});
   };
 

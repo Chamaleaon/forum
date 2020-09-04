@@ -1,6 +1,7 @@
 //constants
 import {RECEIVE_ESSAY} from '../constants/essay'
 import {RECEIVE_MY_ESSAY} from '../constants/essay'
+import {REMOVE_MY_ESSAY} from '../constants/essay'
 
 //api function 
 import {reqAllEssay} from '../../api/essay'
@@ -42,6 +43,12 @@ export function getMyEssay(data){
   }
 }
 
+//remove_my_essay
+export function removeMyessaySync(){
+  return {
+    type:REMOVE_MY_ESSAY,
+  }
+}
 
 
 

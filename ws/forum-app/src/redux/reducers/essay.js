@@ -1,5 +1,6 @@
 import {RECEIVE_ESSAY} from '../constants/essay'
 import {RECEIVE_MY_ESSAY} from '../constants/essay'
+import {REMOVE_MY_ESSAY} from '../constants/essay'
 
 const initEssay = {
   allEssay:[],
@@ -17,6 +18,11 @@ export default function essay(state=initEssay,action){
       return {
         ...state,
         myEssay:[...action.data]
+      }
+    case REMOVE_MY_ESSAY:
+      return {
+        ...state,
+        myEssay:[]
       }
     default :
       return state 

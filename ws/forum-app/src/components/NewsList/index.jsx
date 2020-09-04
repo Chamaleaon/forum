@@ -8,7 +8,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import avatar  from './1.png'
+import { withRouter } from "react-router-dom";
+
+import avatar from "./1.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,31 +25,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewsList(props) {
+function NewsList(props) {
   const classes = useStyles();
+
+  const handleItemCilck = (e) => {
+    if(e.target.id){
+      props.history.push(`/essaydetail/${e.target.id}`)
+    }
+  };
 
   return (
     <div className={classes.root}>
       <Grid item xs={12}>
         <Typography variant="h6" className={classes.title}>
-          News
+          Essays
         </Typography>
         <div className={classes.demo}>
-          <List dense={false}>
+          <List dense={false} onClick={handleItemCilck}>
             {props.essay.map((item) => {
               return (
                 <ListItem key={item.e_id}>
                   <ListItemAvatar>
                     <Avatar>
-                      <img src={avatar} style={{width:"100%"}} />
+                      <img src={avatar} style={{ width: "100%" }} />
                     </Avatar>
-
                   </ListItemAvatar>
                   <ListItemText
                     primary={item.title}
                     secondary={item.content ? item.content : null}
                   />
                   <span>username:{item.publisher_name}</span>
+                  <div id={item.e_id}>查看详情</div>
                 </ListItem>
               );
             })}
@@ -57,3 +65,5 @@ export default function NewsList(props) {
     </div>
   );
 }
+
+export default withRouter(NewsList);

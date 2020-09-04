@@ -6,7 +6,7 @@ import { getAllEssay } from "../../redux/actions/essay";
 
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
-import List from "../../components/List";
+import List from "../../components/NewsList";
 
 
 

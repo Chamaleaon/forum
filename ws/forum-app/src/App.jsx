@@ -14,6 +14,7 @@ import Layout from "./Layout";
 import SignIn from './pages/LoginAndRegister/SignIn'
 import SignUp from './pages/LoginAndRegister/SignUp'
 import AddEssay from './pages/AddEssay'
+import EssayDetail from './components/EssayDetail'
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/addessay" component={AddEssay} />
+      <Route path="/essaydetail/:id" component={EssayDetail} />
     </Router>
   );
 }
