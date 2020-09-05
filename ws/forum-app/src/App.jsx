@@ -24,7 +24,7 @@ export default function App() {
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/addessay" component={AddEssay} />
-      <Route path="/essaydetail/:id" component={EssayDetail} />
+      <Route path="/essaydetail/:e_id" component={EssayDetail} />
     </Router>
   );
 }

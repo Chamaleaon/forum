@@ -33,3 +33,14 @@ export function reqMyEssay(data) {
     },
   }).then(res=>res.json()).catch(()=>{})
 }
+
+
+export function reqEssayDetail(data){
+  return fetch("/essay/find",{
+    body:JSON.stringify(data),
+    method:"POST",
+    headers:{
+      "content-type": "application/json",
+    }
+  }).then(res=>res.json()).catch(()=>{})
+}

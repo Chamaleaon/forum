@@ -2,10 +2,12 @@
 import {RECEIVE_ESSAY} from '../constants/essay'
 import {RECEIVE_MY_ESSAY} from '../constants/essay'
 import {REMOVE_MY_ESSAY} from '../constants/essay'
+import {RECEIVE_ESSAY_DETAIL} from '../constants/essay'
 
 //api function 
 import {reqAllEssay} from '../../api/essay'
 import {reqMyEssay} from '../../api/essay'
+import {reqEssayDetail} from '../../api/essay'
 
 
 
@@ -50,6 +52,22 @@ export function removeMyessaySync(){
   }
 }
 
+
+//essay_detail
+function getEssayDetailSync(data){
+  return {
+    type:RECEIVE_ESSAY_DETAIL,
+    data 
+  }
+}
+
+export function getEssayDetail(data){
+  return dispatch =>{
+    reqEssayDetail(data).then(res=>{
+      dispatch(getEssayDetailSync(res))
+    })
+  }
+}
 
 
 
