@@ -20,6 +20,7 @@ public class Layer {
 	private String creation_time;
 	private String update_time;
 	private int level; //层数，第几层
+	private int replied_lid; //回复的具体二级评论的id，如果为-1，则直接回复该楼层
 	
 	public int getL_id() {
 		return l_id;
@@ -68,6 +69,12 @@ public class Layer {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public int getReplied_lid() {
+		return replied_lid;
+	}
+	public void setReplied_lid(int replied_lid) {
+		this.replied_lid = replied_lid;
 	}
 	
 

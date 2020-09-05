@@ -125,4 +125,32 @@ public class EssayController {
 		res = JsonUtil.toJSONObject(1002, "贴子不存在");
 		return res.toJSONString();
 	}
+	
+	/**
+	 * 删除
+	 * 同时删除该文章下所有回复（包括一级和二级评论）
+	 */
+	@CrossOrigin
+	@RequestMapping(value = "/delete", method = { RequestMethod.POST })
+	public String delete(@RequestBody JSONObject req) {
+		JSONObject res;
+		int e_id = req.getIntValue("e_id");
+		int publisher = req.getIntValue("opretor");
+		//通过e_id和publisher判断是否允许删除
+		List<Map<String,Object>> list = essayDao.byEidAndPublisher(e_id, publisher);
+		if(list.size()>0) {
+			essayDao.delete(e_id);//删除文章
+			List<Map<String,Object>> fList = floorDao.findByEID(e_id);
+			for(Map<String,Object> floor:fList) {
+				int f_id = (int) floor.get("f_id");
+				layerDao.deleteByFloor(f_id);//删除二级评论
+			}
+			floorDao.deleteByEssay(e_id); //删除一级评论
+			res = JsonUtil.toJSONObject(0, "SUCCESS");
+			return res.toJSONString();
+		}
+		
+		res = JsonUtil.toJSONObject(1003, "删除失败");
+		return res.toJSONString();
+	}
 }

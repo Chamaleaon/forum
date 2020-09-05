@@ -10,6 +10,8 @@
 <a href="#查找某个贴子内容一级全部一级评论和二级评论" title="查询单个贴子">查询单个贴子</a><br />
 <a href="#发言" title="发言">写一级评论</a><br />
 <a href="#回复" title="回复">写二级评论</a><br />
+<a href="#发言删除" title="发言删除">删除一级评论</a><br />
+<a href="#回复删除" title="发言删除">删除二级评论</a><br />
 
 ## 用户相关API
 ### 用户注册
@@ -61,6 +63,19 @@
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
         bad:{"RE_DESC":"用户不存在","RE_CODE":1002}
         //其中错误代码1002指用户名等参数错误或不存在
+
+### 删除贴子
+    地址：/essay/delete
+    说明：删除贴子以及全部回复
+    方式：post
+    参数：
+        {
+            "e_id":9,
+            "opretor":2
+        }
+    返回内容：
+        good:{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"删除失败","RE_CODE":1003}
 
 ### 查找所有贴子
     地址：/essay/all
@@ -146,7 +161,18 @@
         }
     返回：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
-        bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}
+        bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}、
+### 发言删除
+    说明：删除该楼，同时删除该楼下面全部二级评论
+    地址：/floor/delete
+    参数：
+    {
+        "f_id":4,
+        "opretor":2 //执行删除操作的用户id
+    }
+    返回：
+        good:{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"删除失败","RE_CODE":1003}
 
 ## 二级评论相关API
 ### 回复
@@ -157,8 +183,21 @@
         "content":"这是测试内容，this is a test essay",
         "publisher":1, //当前评论人id
         "responder":7, //被回复人id
-        "level":1 //所在层数，为当前楼层最后一层加1
+        "level":1, //所在层数，为当前楼层最后一层加1
+        "replied_lid":5 //回复指向的另外二级评论id，如果为-1，则表示直接回复这层
     }
     返回：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
-        bad:{"RE_DESC":"用户或者文章不存在","RE_CODE":1002}
+        bad:{"RE_DESC":"用户或者回复不存在","RE_CODE":1002}
+
+### 回复删除
+    地址：/layer/delete
+    说明：某个用户删除二级评论，同时删除该二级评论的所有回复
+    参数：
+    {
+        "l_id":3,  //需要删除的二级评论id
+        "opretor":6   //执行操作的用户id
+    }
+    返回：
+        good:{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"删除失败","RE_CODE":1003}

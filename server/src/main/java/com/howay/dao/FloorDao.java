@@ -3,6 +3,7 @@ package com.howay.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -24,6 +25,11 @@ public interface FloorDao {
 	@Select("select a.*,b.name as publisher_name from floor a,user b where essay=#{essay} and a.publisher=b.u_id")
 	public List<Map<String,Object>> findByEID(@Param(value = "essay") int essay);
 	
+	@Select("select * from floor where f_id=#{f_id} and publisher=#{publisher}")
+	public List<Map<String,Object>> findByIdAndPublisher(
+			@Param(value = "f_id") int f_id,
+			@Param(value = "publisher") int publisher);
+	
 	@Insert("insert into floor(essay,content,creation_time,update_time,publisher,level) "
 			+ "VALUES(#{essay},#{content},#{creation_time},#{update_time},#{publisher},#{level})")
 	public int insert(
@@ -34,5 +40,11 @@ public interface FloorDao {
 		@Param(value = "publisher") int publisher,
 		@Param(value = "level") int level
 	);
+	
+	@Delete("delete from floor where f_id=#{f_id};")
+	public int delete(@Param(value = "f_id") int f_id);
+	
+	@Delete("delete from floor where essay=#{essay};")
+	public int deleteByEssay(@Param(value = "essay") int essay);
 
 }

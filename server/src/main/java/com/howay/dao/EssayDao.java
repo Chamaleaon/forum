@@ -3,6 +3,7 @@ package com.howay.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,6 +28,11 @@ public interface EssayDao {
 	@Select("select a.*,b.name as publisher_name from essay a,user b where e_id=#{e_id} and a.publisher=b.u_id")
 	public List<Map<String,Object>> byEId(@Param(value = "e_id") int e_id);
 	
+	@Select("select * from essay where e_id=#{e_id} and publisher=#{publisher}")
+	public List<Map<String,Object>> byEidAndPublisher(
+			@Param(value = "e_id") int e_id,
+			@Param(value = "publisher") int publisher);
+	
 	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label) "
 			+ "VALUES(#{title},#{content},#{creation_time},#{update_time},#{publisher},#{label})")
 	public int insert(
@@ -37,5 +43,8 @@ public interface EssayDao {
 		@Param(value = "publisher") int publisher,
 		@Param(value = "label") String label
 	);
+	
+	@Delete("delete from essay where e_id=#{e_id};")
+	public int delete(@Param(value = "e_id") int e_id);
 	
 }

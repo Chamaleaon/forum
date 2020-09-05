@@ -47,7 +47,7 @@ public class FloorController {
 	 */
 	@CrossOrigin
 	@RequestMapping(value = "/write", method = { RequestMethod.POST })
-	public String writePost(@RequestBody JSONObject req) {
+	public String write(@RequestBody JSONObject req) {
 		JSONObject res;
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
@@ -76,5 +76,28 @@ public class FloorController {
 		List<Map<String,Object>> list = layerDao.findByFloorID(f_id);
 		JSONArray res = JsonUtil.toJSONArray(list);
 		return res;
+	}
+	
+	/**
+	 * 删除
+	 * 同时删除该楼下所有二级回复
+	 */
+	@CrossOrigin
+	@RequestMapping(value = "/delete", method = { RequestMethod.POST })
+	public String delete(@RequestBody JSONObject req) {
+		JSONObject res;
+		int f_id = req.getIntValue("f_id");
+		int publisher = req.getIntValue("opretor");
+		
+		List<Map<String,Object>> list = floorDao.findByIdAndPublisher(f_id,publisher);
+		if(list.size()>0) {
+			floorDao.delete(f_id);
+			layerDao.deleteByFloor(f_id);
+			res = JsonUtil.toJSONObject(0, "SUCCESS");
+			return res.toJSONString();
+		}
+		
+		res = JsonUtil.toJSONObject(1003, "删除失败");
+		return res.toJSONString();
 	}
 }
