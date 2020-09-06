@@ -31,16 +31,43 @@ export function reqMyEssay(data) {
     headers: {
       "content-type": "application/json",
     },
-  }).then(res=>res.json()).catch(()=>{})
+  })
+    .then((res) => res.json())
+    .catch(() => {});
 }
 
-
-export function reqEssayDetail(data){
-  return fetch("/essay/find",{
-    body:JSON.stringify(data),
-    method:"POST",
-    headers:{
+export function reqEssayDetail(data) {
+  return fetch("/essay/find", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
       "content-type": "application/json",
-    }
-  }).then(res=>res.json()).catch(()=>{})
+    },
+  })
+    .then((res) => res.json())
+    .catch(() => {});
+}
+
+export function reqPublishComment(data) {
+  return fetch("/floor/write", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .catch(() => {});
+}
+
+export function reqReplyToComment(data) {
+  return fetch("/layer/write", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .catch(() => {});
 }
