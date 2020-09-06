@@ -41,6 +41,9 @@ public interface FloorDao {
 		@Param(value = "level") int level
 	);
 	
+	@Select("SELECT @@IDENTITY")
+	public int getNewId();  //返回insert时最新id
+	
 	@Delete("delete from floor where f_id=#{f_id};")
 	public int delete(@Param(value = "f_id") int f_id);
 	

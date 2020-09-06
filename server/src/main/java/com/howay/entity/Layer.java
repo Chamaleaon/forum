@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "layer")
 public class Layer {
 	
-	private int l_id; 
+	private int l_id; //该二级评论id————(主键，唯一标识，所有表必不可少的)
 	private int floor; //所属一级评论id
 	private String content;
 	private int publisher; //发布人id

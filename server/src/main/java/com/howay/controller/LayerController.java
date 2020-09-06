@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.howay.dao.FloorDao;
 import com.howay.dao.LayerDao;
 import com.howay.dao.UserDao;
+import com.howay.service.RelationService;
 import com.howay.util.JsonUtil;
 
 /**
@@ -38,6 +39,9 @@ public class LayerController {
 
 	@Autowired
 	LayerDao layerDao;
+	
+	@Autowired
+	RelationService relationService;
 
 	/**
 	 * 写回复
@@ -60,9 +64,15 @@ public class LayerController {
 		List<Map<String, Object>> uList2 = userDao.getUserInfoById(responder);
 		List<Map<String, Object>> list = floorDao.byId(floor);
 		boolean isOk = false;
+		String r_type = "LAYER";
+		int rt_id = replied_lid;
 		if(replied_lid==-1) {
 			isOk = true;
+			r_type = "FLOOR";
+			rt_id = floor;
 		}else {
+			r_type = "LAYER";
+			rt_id = replied_lid;
 			List<Map<String, Object>> list2 = layerDao.findById(replied_lid);
 			if(list2.size()>0) {
 				isOk = true;
@@ -72,6 +82,8 @@ public class LayerController {
 		}
 		if (list.size() > 0 && isOk && uList.size() > 0 && uList2.size() > 0) { // 用户存在且楼层存在且回复存在
 			layerDao.insert(floor, content, time, time, publisher, responder, level, replied_lid);
+			int st_id = layerDao.getNewId();
+			relationService.insert(responder, publisher, r_type, "LAYER", rt_id, st_id, time);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
 			return res.toJSONString();
 		}

@@ -111,7 +111,7 @@ public class EssayController {
 			List<Map<String,Object>> floorList = floorDao.findByEID(e_id);
 			JSONArray floorJa = new JSONArray();
 			for(Map<String,Object> floor:floorList) {
-				System.out.println(floor);
+				//System.out.println(floor);
 				int f_id = (int) floor.get("f_id");
 				List<Map<String,Object>> layerList = layerDao.findByFloorID(f_id);
 				JSONObject e = new JSONObject(floor);

@@ -18,6 +18,7 @@ import com.howay.dao.EssayDao;
 import com.howay.dao.FloorDao;
 import com.howay.dao.LayerDao;
 import com.howay.dao.UserDao;
+import com.howay.service.RelationService;
 import com.howay.util.JsonUtil;
 
 /**
@@ -42,6 +43,9 @@ public class FloorController {
 	
 	@Autowired
 	LayerDao layerDao;
+	
+	@Autowired
+	RelationService relationService;
 	/**
 	 * 写评论
 	 */
@@ -61,6 +65,9 @@ public class FloorController {
 		List<Map<String,Object>> list2 = essayDao.byEId(essay);
 		if(list.size()>0 && list2.size()>0) { //用户存在且文章存在
 			floorDao.insert(essay, content, time, time, publisher, level);
+			int f_id = floorDao.getNewId();
+			int sender_id = (int) list2.get(0).get("publisher");
+			relationService.insert(sender_id,publisher,"ESSAY","FLOOR",essay, f_id, time);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
 			return res.toJSONString();
 		}

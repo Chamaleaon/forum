@@ -49,6 +49,9 @@ public interface LayerDao {
 		@Param(value = "replied_lid") int replied_lid
 	);
 	
+	@Select("SELECT @@IDENTITY")
+	public int getNewId();  //返回insert时最新id
+	
 	@Delete("delete from layer where l_id=#{l_id} and publisher=#{publisher}")
 	public int delete(
 			@Param(value = "l_id") int l_id,
