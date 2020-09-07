@@ -50,13 +50,13 @@ export default function FormPropsTextFields(props) {
     if (res.RE_DESC === "SUCCESS") {
       setOpen(true)
       setTimeout(() => {
-        props.history.push('/layout/news')
+        props.history.push('/layout/essays')
       }, 1000);
     }
   };
 
   const handleCancel = ()=>{
-    props.history.push('/layout/news')
+    props.history.push('/layout/essays')
   }
 
   const handleClose = (event, reason) => {

@@ -36,6 +36,7 @@ function EssayDetail(props) {
   const classes = useStyles();
 
   const essayInfo = props.essayInfo;
+  // console.log(essayInfo)
   return (
     <>
       <Button onClick={handleBack} variant="contained" color="primary">
@@ -57,7 +58,7 @@ function EssayDetail(props) {
             label:{essayInfo.label}
           </Typography>
           <Typography variant="body2" component="div">
-            <Comment floor={essayInfo.floor || []} essay={props.match.params.e_id} />
+            <Comment floor={essayInfo.floor || []} essay={props.match.params.e_id} publisher = {essayInfo.publisher} />
           </Typography>
         </CardContent>
       </Card>

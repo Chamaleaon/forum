@@ -53,6 +53,7 @@ export function removeMyessaySync(){
 }
 
 
+
 //essay_detail
 function getEssayDetailSync(data){
   return {

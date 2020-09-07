@@ -10,16 +10,15 @@ import TextField from "@material-ui/core/TextField";
 
 import { connect } from "react-redux";
 import { getEssayDetail } from "../../../redux/actions/essay";
+import { withRouter } from "react-router-dom";
 
 import {
   reqPublishComment,
   reqReplyToComment,
   reqDelFloor,
   reqDelLayer,
+  reqDelEssay,
 } from "../../../api/essay";
-
-//c_id
-const publisher = document.cookie.split("=")[2] * 1;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +46,8 @@ const submitData = {
 //1 回复楼主
 //2 回复二级评论
 function Comment(props) {
+  //c_id  登录状态不能放在function外面，否则会导致登录或者注销后无法更新删除按钮是否显示
+  const publisher = document.cookie.split("=")[2] * 1;
   const classes = useStyles();
   const [drawerState, setDawerState] = useState(false);
   const [content, setContent] = useState("");
@@ -167,6 +168,17 @@ function Comment(props) {
           alert("del failed");
         }
       });
+    } else if (flag === "essay") {
+      data.e_id = id;
+      reqDelEssay(data).then((res) => {
+        if (res.RE_DESC === "SUCCESS") {
+          props.getEssayDetail({ e_id: props.essay });
+          props.history.replace("/");
+          alert("del ok");
+        } else {
+          alert("del failed");
+        }
+      });
     }
   };
 
@@ -175,6 +187,15 @@ function Comment(props) {
       <Button variant="contained" color="primary" onClick={publishComment}>
         发表评论
       </Button>
+      {publisher === props.publisher && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleDel("essay", props.essay)}
+        >
+          删除文章
+        </Button>
+      )}
       <div>评论内容:</div>
       <List component="nav" aria-label="main mailbox folders">
         {props.floor.map((item) => {
@@ -264,4 +285,4 @@ function Comment(props) {
   );
 }
 
-export default connect(null, { getEssayDetail })(Comment);
+export default withRouter(connect(null, { getEssayDetail })(Comment));
