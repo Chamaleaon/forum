@@ -75,7 +75,13 @@ function Comment(props) {
     setDawerState(false);
     // console.log(submitFlag)
     if (submitData.flag === 0) {
-      const level = props.floor[props.floor.length - 1].level + 1;
+      const floorLength = props.floor.length;
+      let level;
+      if (floorLength) {
+        level = props.floor[props.floor.length - 1].level + 1;
+      } else {
+        level = 1;
+      }
       // console.log(props)
       const publisher = document.cookie.split("=")[2] * 1;
       let data = {
@@ -103,7 +109,7 @@ function Comment(props) {
       } else {
         level = 1;
       }
-      console.log(submitData);
+      // console.log(submitData);
       let data = {
         floor: submitData.item.f_id,
         content,
@@ -120,7 +126,7 @@ function Comment(props) {
 
     if (submitData.flag === 2) {
       const publisher = document.cookie.split("=")[2] * 1;
-      console.log(submitData);
+      // console.log(submitData);
       let data = {
         floor: submitData.item.floor,
         content,
@@ -129,7 +135,7 @@ function Comment(props) {
         level: submitData.layer[submitData.layer.length - 1].level + 1,
         replied_lid: submitData.item.l_id,
       };
-      console.log(data);
+      // console.log(data);
       reqReplyToComment(data).then((res) => {
         props.getEssayDetail({ e_id: props.essay });
       });
@@ -194,47 +200,51 @@ function Comment(props) {
                   </Button>
                 )}
               </ListItem>
-              二级评论:
-              <List className={classes.secRoot}>
-                {item.layer.length > 0 &&
-                  item.layer.map((secItem) => {
-                    return (
-                      <ListItem key={secItem.l_id}>
-                        ##
-                        <div>
-                          {secItem.replied_lid !== -1 ? (
-                            <span>
-                              {secItem.publisher_name}回复
-                              {secItem.responder_name}
-                            </span>
-                          ) : (
-                            <span>{secItem.publisher_name}回复楼主</span>
-                          )}
-                        </div>
-                        <ListItemIcon>
-                          NickName:{secItem.publisher_name}
-                        </ListItemIcon>
-                        <ListItemText primary={secItem.content} />
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={replyToComment(2, secItem, item.layer)}
-                        >
-                          回复
-                        </Button>
-                        {publisher === secItem.publisher && (
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleDel("layer", secItem.l_id)}
-                          >
-                            删除
-                          </Button>
-                        )}
-                      </ListItem>
-                    );
-                  })}
-              </List>
+              {item.layer.length && (
+                <div>
+                  二级评论:
+                  <List className={classes.secRoot}>
+                    {item.layer.length > 0 &&
+                      item.layer.map((secItem) => {
+                        return (
+                          <ListItem key={secItem.l_id}>
+                            ##
+                            <div>
+                              {secItem.replied_lid !== -1 ? (
+                                <span>
+                                  {secItem.publisher_name}回复
+                                  {secItem.responder_name}
+                                </span>
+                              ) : (
+                                <span>{secItem.publisher_name}回复楼主</span>
+                              )}
+                            </div>
+                            <ListItemIcon>
+                              NickName:{secItem.publisher_name}
+                            </ListItemIcon>
+                            <ListItemText primary={secItem.content} />
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={replyToComment(2, secItem, item.layer)}
+                            >
+                              回复
+                            </Button>
+                            {publisher === secItem.publisher && (
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleDel("layer", secItem.l_id)}
+                              >
+                                删除
+                              </Button>
+                            )}
+                          </ListItem>
+                        );
+                      })}
+                  </List>
+                </div>
+              )}
             </div>
           );
         })}
