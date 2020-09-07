@@ -21,7 +21,7 @@ export default function App() {
     <Router>
       <Route path="/" component={Layout} exact/>
       <Route path="/layout" component={Layout} />
-      <Route path="/signin" component={SignIn} />
+      <Route path="/signin/:e_id?" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/addessay" component={AddEssay} />
       <Route path="/essaydetail/:e_id" component={EssayDetail} />

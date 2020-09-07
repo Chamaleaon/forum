@@ -57,15 +57,23 @@ function Comment(props) {
   };
 
   const publishComment = () => {
-    setDawerState(true);
-    submitData.flag = 0;
+    if (document.cookie) {
+      setDawerState(true);
+      submitData.flag = 0;
+    } else {
+      props.history.push(`/signin/${props.essay}`);
+    }
   };
   const replyToComment = (flag, item, layer) => () => {
-    //flag 评论类型 item 当前楼或层信息 layer 评论某一层时，该层所在的数组，用于拿到最后一层的level
-    setDawerState(true);
-    submitData.flag = flag;
-    submitData.item = item;
-    submitData.layer = layer;
+    if (document.cookie) {
+      //flag 评论类型 item 当前楼或层信息 layer 评论某一层时，该层所在的数组，用于拿到最后一层的level
+      setDawerState(true);
+      submitData.flag = flag;
+      submitData.item = item;
+      submitData.layer = layer;
+    } else {
+      props.history.push(`/signin/${props.essay}`);
+    }
   };
 
   const handleContentInput = (e) => {

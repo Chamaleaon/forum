@@ -73,8 +73,14 @@ function SignIn(props) {
 
     if (res.RE_DESC === "SUCCESS") {
       setOpen(true);
+      console.log(props);
+      const e_id = props.match.params.e_id;
       setTimeout(() => {
-        props.history.push("/");
+        if (e_id) {
+          props.history.push(`/essaydetail/${e_id}`);
+        } else {
+          props.history.push("/");
+        }
       }, 1000);
     }
   };
