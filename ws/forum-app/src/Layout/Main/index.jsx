@@ -11,7 +11,7 @@ export default class Main extends Component{
     return (
       <div className="wrapper">
         <Route path="/" component={Essays} exact />
-        <Route path="/layout/news" component={Essays} />
+        <Route path="/layout/essays" component={Essays} />
         <Route path="/layout/mine" component={Mine} />
       </div>
     )

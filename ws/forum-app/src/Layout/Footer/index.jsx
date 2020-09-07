@@ -27,7 +27,7 @@ function SimpleBottomNavigation(props) {
     setValue(newValue);
     switch (newValue){
       case 0:
-        props.history.push('/layout/news')
+        props.history.push('/layout/essays')
         break
       case 1:
         props.history.push('/layout/mine')

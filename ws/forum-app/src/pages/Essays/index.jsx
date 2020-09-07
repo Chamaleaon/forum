@@ -19,7 +19,12 @@ class Essays extends Component {
   }
 
   handleAdd = ()=>{
-    this.props.history.push('/addessay')
+    //判断是否登录 
+    if(document.cookie){
+      this.props.history.push('/addessay')
+    }else{
+      this.props.history.push('/signin')
+    }
   }
 
   render() {

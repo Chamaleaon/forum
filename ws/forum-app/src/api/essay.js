@@ -71,3 +71,28 @@ export function reqReplyToComment(data) {
     .then((res) => res.json())
     .catch(() => {});
 }
+
+export function reqDelFloor(data) {
+  return fetch("/floor/delete", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .catch(() => {});
+}
+
+
+export function reqDelLayer(data) {
+  return fetch("/layer/delete", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .catch(() => {});
+}

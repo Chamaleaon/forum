@@ -11,7 +11,15 @@ import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import { getEssayDetail } from "../../../redux/actions/essay";
 
-import { reqPublishComment, reqReplyToComment } from "../../../api/essay";
+import {
+  reqPublishComment,
+  reqReplyToComment,
+  reqDelFloor,
+  reqDelLayer,
+} from "../../../api/essay";
+
+//c_id
+const publisher = document.cookie.split("=")[2] * 1;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,12 +95,13 @@ function Comment(props) {
     if (submitData.flag === 1) {
       const publisher = document.cookie.split("=")[2] * 1;
       //判断当前楼层是否为0，如果为默认level =1 ，回复每层时不用判断，因为有层才能回复 -_-! ...
-      const layerLength = submitData.item.layer.length
-      let level
-      if(layerLength){
-        level = submitData.item.layer[submitData.item.layer.length - 1].level + 1
-      } else{
-        level = 1
+      const layerLength = submitData.item.layer.length;
+      let level;
+      if (layerLength) {
+        level =
+          submitData.item.layer[submitData.item.layer.length - 1].level + 1;
+      } else {
+        level = 1;
       }
       console.log(submitData);
       let data = {
@@ -127,6 +136,34 @@ function Comment(props) {
     }
   };
 
+  const handleDel = (flag, id) => () => {
+    let data = {
+      opretor: publisher,
+    };
+
+    if (flag === "floor") {
+      data.f_id = id;
+      reqDelFloor(data).then((res) => {
+        if (res.RE_DESC === "SUCCESS") {
+          props.getEssayDetail({ e_id: props.essay });
+          alert("del ok");
+        } else {
+          alert("del failed");
+        }
+      });
+    } else if (flag === "layer") {
+      data.l_id = id;
+      reqDelLayer(data).then((res) => {
+        if (res.RE_DESC === "SUCCESS") {
+          props.getEssayDetail({ e_id: props.essay });
+          alert("del ok");
+        } else {
+          alert("del failed");
+        }
+      });
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Button variant="contained" color="primary" onClick={publishComment}>
@@ -147,6 +184,15 @@ function Comment(props) {
                 >
                   回复此楼
                 </Button>
+                {publisher === item.publisher && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleDel("floor", item.f_id)}
+                  >
+                    删除
+                  </Button>
+                )}
               </ListItem>
               二级评论:
               <List className={classes.secRoot}>
@@ -165,15 +211,26 @@ function Comment(props) {
                             <span>{secItem.publisher_name}回复楼主</span>
                           )}
                         </div>
-                        <ListItemIcon>NickName:{secItem.publisher_name}</ListItemIcon>
+                        <ListItemIcon>
+                          NickName:{secItem.publisher_name}
+                        </ListItemIcon>
                         <ListItemText primary={secItem.content} />
                         <Button
                           variant="contained"
                           color="primary"
                           onClick={replyToComment(2, secItem, item.layer)}
                         >
-                          回复此层
+                          回复
                         </Button>
+                        {publisher === secItem.publisher && (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleDel("layer", secItem.l_id)}
+                          >
+                            删除
+                          </Button>
+                        )}
                       </ListItem>
                     );
                   })}
