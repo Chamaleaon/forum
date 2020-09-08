@@ -16,6 +16,7 @@ import SignUp from './pages/LoginAndRegister/SignUp'
 import AddEssay from './pages/AddEssay'
 import EssayDetail from './components/EssayDetail'
 
+
 export default function App() {
   return (
     <Router>

@@ -7,6 +7,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import Divider from "@material-ui/core/Divider";
+import TelegramIcon from '@material-ui/icons/Telegram';
 
 import { withRouter } from "react-router-dom";
 
@@ -21,16 +24,53 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   title: {
-    margin: theme.spacing(4, 0, 2),
+    margin: theme.spacing(2, 2, 2),
+    fontSize: "120%",
+    fontWeight: "bold",
+    color: "#424242",
+    display:'flex',
+    flexGrow:1,
+    padding:'2%',
+    border:"2px solid #d1ff33",
+    borderRadius:'10px'
   },
+  card: {
+    width: "100%",
+    padding: "5%",
+    position: "relative",
+  },
+  user: {
+    width: "30%",
+    display: "flex",
+    alignItems: "center",
+  },
+  nickname: {
+    color: "#455a64",
+    fontSize: "130%",
+  },
+  header: {
+    display: "flex",
+  },
+  clickspace: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    left: "0",
+    top: "0",
+  },
+  content: {
+    textIndent: "10%",
+    color: "#333",
+  },
+  time: {},
 }));
 
 function NewsList(props) {
   const classes = useStyles();
 
   const handleItemCilck = (e) => {
-    if(e.target.id){
-      props.history.push(`/essaydetail/${e.target.id}`)
+    if (e.target.id) {
+      props.history.push(`/essaydetail/${e.target.id}`);
     }
   };
 
@@ -45,17 +85,32 @@ function NewsList(props) {
             {props.essay.map((item) => {
               return (
                 <ListItem key={item.e_id}>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <img src={avatar} style={{ width: "100%" }} />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={item.title}
-                    secondary={item.content ? item.content : null}
-                  />
-                  <span>username:{item.publisher_name}</span>
-                  <div id={item.e_id}>查看详情</div>
+                  <Card className={classes.card}>
+                    <div className={classes.time}>{item.creation_time}</div>
+                    <div className={classes.header}>
+                      <div className={classes.user}>
+                        <ListItemAvatar>
+                          <Avatar>
+                            <img src={avatar} style={{ width: "100%" }} />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <div className={classes.nickname}>
+                          {item.publisher_name}
+                        </div>
+                      </div>
+                      <div className={classes.title}>
+                        <TelegramIcon style={{marginRight:"10%"}} />
+                        <div>{item.title}</div>
+                      </div>
+                    </div>
+                    <Divider variant="middle" />
+                    <div className={classes.content}>
+                      {item.content ? item.content : null}
+                    </div>
+                    <div className={classes.clickspace} id={item.e_id}>
+                      {/* 查看详情区域 */}
+                    </div>
+                  </Card>
                 </ListItem>
               );
             })}

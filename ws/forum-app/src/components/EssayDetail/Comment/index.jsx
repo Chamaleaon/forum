@@ -204,6 +204,11 @@ function Comment(props) {
           删除文章
         </Button>
       )}
+      {publisher === props.publisher && (
+        <Button variant="contained" color="primary">
+          修改文章
+        </Button>
+      )}
       <div>评论内容:</div>
       <List component="nav" aria-label="main mailbox folders">
         {props.floor.map((item) => {
