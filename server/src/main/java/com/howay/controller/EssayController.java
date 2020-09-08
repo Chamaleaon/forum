@@ -161,10 +161,13 @@ public class EssayController {
 		Date date = new Date(System.currentTimeMillis());
 		String time = formatter.format(date);
 		int e_id = req.getIntValue("e_id");
+		int publisher = req.getIntValue("opretor");
 		String title = req.getString("title");
 		String content = req.getString("content");
-		List<Map<String ,Object>> list = essayDao.byEId(e_id);
-		if(list.size()>0) { //文章存在
+		//List<Map<String ,Object>> list = essayDao.byEId(e_id);
+		List<Map<String, Object>> list = essayDao.byEidAndPublisher(e_id, publisher);
+		
+		if(list.size()>0) { 
 			essayDao.update(e_id, title, content,time);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
 			return res.toJSONString();
