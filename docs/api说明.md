@@ -85,7 +85,8 @@
     方式：post
     参数：
         {
-            "e_id":1,   //更新贴子id
+            "e_id":1,   //更新贴子id，
+            "opretor":5  ///操作人id
             "content":"文章修改",  
             "title":"更新"
         }
