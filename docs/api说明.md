@@ -8,6 +8,7 @@
 <a href="#修改" title="修改">修改</a><br />
 <a href="#查找所有贴子" title="查找所有贴子">查找所有贴子</a><br />
 <a href="#通过用户id查找贴子" title="通过用户id查找贴子">通过用户id查找贴子</a><br />
+<a href="#搜索" title="搜索">搜索</a><br />
 <a href="#查找某个贴子内容一级全部一级评论和二级评论" title="查询单个贴子">查询单个贴子</a><br />
 <a href="#发言" title="发言">写一级评论</a><br />
 <a href="#回复" title="回复">写二级评论</a><br />
@@ -163,6 +164,13 @@
     }
 
     bad：{"RE_DESC":"贴子不存在","RE_CODE":1002}
+
+### 搜索
+    地址：/essay/search
+    说明：关键字进行模糊搜索，包括标题和内容
+    参数：{"key":"发布"}
+    返回：
+        {"RES":[{"creation_time":"2020-09-07 00:52:21","update_time":"2020-09-07 00:52:21","publisher_name":"zs","publisher":2,"e_id":10,"label":"IT","title":"微软","content":"微软发布surface duo"}],"RE_DESC":"SUCCESS","RE_CODE":0}
 
 ## 一级评论相关API
 ### 发言

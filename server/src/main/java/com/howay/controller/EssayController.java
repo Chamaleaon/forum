@@ -172,5 +172,16 @@ public class EssayController {
 		res = JsonUtil.toJSONObject(1004, "更新失败");
 		return res.toJSONString();
 	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/search", method = { RequestMethod.POST })
+	public String search(@RequestBody JSONObject req) {
+		String key = req.getString("key");
+		List<Map<String, Object>> list = essayDao.search(key);
+		JSONArray ja = JsonUtil.toJSONArray(list);
+		JSONObject res = JsonUtil.toJSONObject(0, "SUCCESS");
+		res.put("RES", ja);
+		return res.toJSONString();
+	}
 
 }

@@ -34,6 +34,11 @@ public interface EssayDao {
 			@Param(value = "e_id") int e_id,
 			@Param(value = "publisher") int publisher);
 	
+	@Select("SELECT a.*,b.name as publisher_name from" + 
+			" (select * from essay where title like CONCAT('%',#{key},'%') or content like CONCAT('%',#{key},'%')) a," + 
+			" user b where a.publisher=b.u_id")
+	public List<Map<String,Object>> search(@Param(value = "key") String key);
+	
 	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label) "
 			+ "VALUES(#{title},#{content},#{creation_time},#{update_time},#{publisher},#{label})")
 	public int insert(
