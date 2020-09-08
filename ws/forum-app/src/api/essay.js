@@ -110,3 +110,30 @@ export function reqDelLayer(data) {
     .then((res) => res.json())
     .catch(() => {});
 }
+
+
+export function reqSearchEssay(data) {
+  return fetch("/essay/search", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .catch(() => {});
+}
+
+
+//changeEssay 
+export function reqChangeEssay(data){
+  return fetch("/essay/update", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .catch(() => {});
+}

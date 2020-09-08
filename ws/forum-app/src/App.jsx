@@ -14,6 +14,7 @@ import Layout from "./Layout";
 import SignIn from './pages/LoginAndRegister/SignIn'
 import SignUp from './pages/LoginAndRegister/SignUp'
 import AddEssay from './pages/AddEssay'
+import ChangeEssay from './pages/ChangeEssay'
 import EssayDetail from './components/EssayDetail'
 
 
@@ -25,6 +26,7 @@ export default function App() {
       <Route path="/signin/:e_id?" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/addessay" component={AddEssay} />
+      <Route path="/changeessay/:e_id" component={ChangeEssay} />
       <Route path="/essaydetail/:e_id" component={EssayDetail} />
     </Router>
   );

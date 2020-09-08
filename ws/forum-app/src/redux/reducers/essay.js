@@ -1,7 +1,6 @@
 import { RECEIVE_ESSAY } from "../constants/essay";
 import { RECEIVE_MY_ESSAY } from "../constants/essay";
 import { REMOVE_MY_ESSAY } from "../constants/essay";
-import { REMOVE_ESSAY_INFO } from "../constants/essay";
 import { RECEIVE_ESSAY_DETAIL } from "../constants/essay";
 
 const initEssay = {

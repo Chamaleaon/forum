@@ -190,6 +190,10 @@ function Comment(props) {
     }
   };
 
+  const handleToChange = ()=>{
+    props.history.push(`/changeessay/${props.match.params.e_id}`)
+  }
+
   return (
     <div className={classes.root}>
       <Button variant="contained" color="primary" onClick={publishComment}>
@@ -205,7 +209,7 @@ function Comment(props) {
         </Button>
       )}
       {publisher === props.publisher && (
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleToChange}>
           修改文章
         </Button>
       )}

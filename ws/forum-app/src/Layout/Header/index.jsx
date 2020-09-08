@@ -13,11 +13,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
+
+import { connect } from "react-redux";
+import { searchEssay } from "../../redux/actions/essay";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  root:{
-    height:"8%",
+  root: {
+    height: "8%",
   },
   grow: {
     flexGrow: 1,
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: "100%",
+    width: "80%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
       width: "auto",
@@ -54,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 9999,
   },
   inputRoot: {
     color: "inherit",
@@ -61,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: '1em',
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
@@ -82,13 +86,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [key, setKey] = React.useState('');
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const location = props.location.pathname;
+  let isHome;
+  if (
+    location === "/" ||
+    location === "/layout" ||
+    location === "/layout/essays"
+  ) {
+    isHome = true;
+  } else {
+    isHome = false;
+  }
+  const handleSearchInput = (e) => {
+    setKey(e.target.value)
+  };
+
+  const handleSearch = ()=>{
+    let data = {
+      key
+    };
+    props.searchEssay(data).then((res) => {
+      if (res === 1) {
+        alert("搜索完成");
+      }
+    });
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -103,9 +133,6 @@ export default function PrimarySearchAppBar() {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -166,7 +193,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow} className={classes.root}>
-      <AppBar position="static" style={{height:"100%"}}>
+      <AppBar position="static" style={{ height: "100%" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -179,53 +206,22 @@ export default function PrimarySearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             Material-UI
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          {isHome && (
+            <div style={{display:'flex'}}>
+              <div className={classes.search}>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={handleSearchInput}
+                />
+              </div>
+              <IconButton onClick={handleSearch}><SearchIcon className={classes.searchIcon} /></IconButton>
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
@@ -233,3 +229,4 @@ export default function PrimarySearchAppBar() {
     </div>
   );
 }
+export default withRouter(connect(null, { searchEssay })(PrimarySearchAppBar));

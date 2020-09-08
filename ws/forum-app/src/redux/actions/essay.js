@@ -1,13 +1,9 @@
 //constants
-import {RECEIVE_ESSAY} from '../constants/essay'
-import {RECEIVE_MY_ESSAY} from '../constants/essay'
-import {REMOVE_MY_ESSAY} from '../constants/essay'
-import {RECEIVE_ESSAY_DETAIL} from '../constants/essay'
+import {RECEIVE_ESSAY,RECEIVE_MY_ESSAY,REMOVE_MY_ESSAY,RECEIVE_ESSAY_DETAIL} from '../constants/essay'
+
 
 //api function 
-import {reqAllEssay} from '../../api/essay'
-import {reqMyEssay} from '../../api/essay'
-import {reqEssayDetail} from '../../api/essay'
+import {reqEssayDetail,reqSearchEssay,reqAllEssay,reqMyEssay} from '../../api/essay'
 
 
 
@@ -66,6 +62,26 @@ export function getEssayDetail(data){
   return dispatch =>{
     reqEssayDetail(data).then(res=>{
       dispatch(getEssayDetailSync(res))
+    })
+  }
+}
+
+
+//searchEssay 
+function searchEssaySync(data){
+  return {
+    type:RECEIVE_ESSAY,
+    data 
+  }
+}
+
+export function searchEssay(data){
+  return dispatch => {
+    return reqSearchEssay(data).then(res => {
+      if(res.RES.length){
+        dispatch(searchEssaySync(res.RES))
+        return 1;
+      }
     })
   }
 }

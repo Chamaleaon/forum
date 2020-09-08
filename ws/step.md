@@ -41,3 +41,15 @@ login/register
 
 
 ### 样式调整 
+- topbar
+- detail 
+- publish 
+- signin 
+- signup  
+
+### 搜索功能  
+- 头部搜索框 请求 数据 ，修改redux 中allEssay列表数据  用户个人页不显示搜索框 
+
+
+### 修改文章功能 
+
