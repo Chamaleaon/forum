@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -33,6 +34,11 @@ public interface EssayDao {
 			@Param(value = "e_id") int e_id,
 			@Param(value = "publisher") int publisher);
 	
+	@Select("SELECT a.*,b.name as publisher_name from" + 
+			" (select * from essay where title like CONCAT('%',#{key},'%') or content like CONCAT('%',#{key},'%')) a," + 
+			" user b where a.publisher=b.u_id")
+	public List<Map<String,Object>> search(@Param(value = "key") String key);
+	
 	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label) "
 			+ "VALUES(#{title},#{content},#{creation_time},#{update_time},#{publisher},#{label})")
 	public int insert(
@@ -44,7 +50,15 @@ public interface EssayDao {
 		@Param(value = "label") String label
 	);
 	
-	@Delete("delete from essay where e_id=#{e_id};")
+	@Delete("delete from essay where e_id=#{e_id};") 
 	public int delete(@Param(value = "e_id") int e_id);
+	
+	@Update("update essay set title=#{title},content=#{content},update_time=#{time} where e_id=#{e_id}")
+	public int update(
+		@Param(value = "e_id") int e_id,
+		@Param(value = "title") String title,
+		@Param(value = "content") String content,
+		@Param(value = "time") String time
+			);
 	
 }
