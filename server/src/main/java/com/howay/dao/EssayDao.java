@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -44,7 +45,15 @@ public interface EssayDao {
 		@Param(value = "label") String label
 	);
 	
-	@Delete("delete from essay where e_id=#{e_id};")
+	@Delete("delete from essay where e_id=#{e_id};") 
 	public int delete(@Param(value = "e_id") int e_id);
+	
+	@Update("update essay set title=#{title},content=#{content},update_time=#{time} where e_id=#{e_id}")
+	public int update(
+		@Param(value = "e_id") int e_id,
+		@Param(value = "title") String title,
+		@Param(value = "content") String content,
+		@Param(value = "time") String time
+			);
 	
 }

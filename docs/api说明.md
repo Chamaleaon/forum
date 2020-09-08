@@ -5,6 +5,7 @@
 <a href="#用户登录" title="用户登录">登录</a><br />
 <a href="#通过id查找用户信息" title="通过id查找用户信息">通过id查找用户信息</a><br />
 <a href="#发帖" title="发帖">发帖</a><br />
+<a href="#修改" title="修改">修改</a><br />
 <a href="#查找所有贴子" title="查找所有贴子">查找所有贴子</a><br />
 <a href="#通过用户id查找贴子" title="通过用户id查找贴子">通过用户id查找贴子</a><br />
 <a href="#查找某个贴子内容一级全部一级评论和二级评论" title="查询单个贴子">查询单个贴子</a><br />
@@ -77,6 +78,19 @@
     返回内容：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
         bad:{"RE_DESC":"删除失败","RE_CODE":1003}
+### 修改
+    地址：/essay/update
+    说明：仅修改标题和内容，更新时间自动变化（贴子排序按更新时间进行排序（最新或最早））
+    方式：post
+    参数：
+        {
+            "e_id":1,   //更新贴子id
+            "content":"文章修改",  
+            "title":"更新"
+        }
+    返回：
+        good:{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"更新失败","RE_CODE":1004} (e_id错误会更新失败)
 
 ### 查找所有贴子
     地址：/essay/all
