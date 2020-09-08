@@ -104,6 +104,7 @@ public class LayerController {
 		List<Map<String, Object>> list = layerDao.findByIdAndPublisher(l_id, publisher);
 		if (list.size() > 0) {
 			layerDao.delete(l_id, publisher);
+			relationService.delete("LAYER", l_id);
 			List<Integer> deleteList = new  ArrayList<Integer>();
 			deleteList.add(l_id);
 			while(true) {  //删除该评论下所有二级回复
@@ -118,6 +119,7 @@ public class LayerController {
 					//System.out.println("删除"+lid);
 					deleteList.add(lid);
 					layerDao.deleteById(lid);
+					relationService.delete("LAYER", lid);
 				}
 			}
 			res = JsonUtil.toJSONObject(0, "SUCCESS");

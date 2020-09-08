@@ -27,6 +27,12 @@ public interface LayerDao {
 	
 	@Select("select * from layer where l_id=#{l_id}")
 	public List<Map<String,Object>> findById(@Param(value = "l_id") int l_id);
+
+	@Select("select m.*,n.name as responder_name from ("
+			+ "select a.*,b.name as publisher_name FROM "
+			+ "layer a,user b where a.publisher=b.u_id) m,"
+			+ "user n where m.responder=n.u_id and m.l_id=#{l_id}")
+	public List<Map<String,Object>> byId(@Param(value = "l_id") int l_id);
 	
 	@Select("select * from layer where replied_lid=#{replied_lid}")
 	public List<Map<String,Object>> findByReplied_lid(@Param(value = "replied_lid") int replied_lid);

@@ -99,6 +99,12 @@ public class FloorController {
 		List<Map<String,Object>> list = floorDao.findByIdAndPublisher(f_id,publisher);
 		if(list.size()>0) {
 			floorDao.delete(f_id);
+			relationService.delete("FLOOR", f_id);
+			List<Map<String,Object>> layerList = layerDao.findByFloorID(f_id);
+			for(Map<String,Object> layer:layerList){
+				int l_id = (int) layer.get("l_id");
+				relationService.delete("LAYER", l_id);
+			}
 			layerDao.deleteByFloor(f_id);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
 			return res.toJSONString();
