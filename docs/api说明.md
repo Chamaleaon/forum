@@ -271,7 +271,12 @@
         "RE_DESC": "SUCCESS",
         "RE_CODE": 0
     }
-    其中，original是被回复的消息，原消息；reply是回复消息。油两条组成一组关系，上面显示回复，下面显示被回复，其中都有type，type有三个值{"ESSAY","FLOOR","LAYER"},需要关心消息的属性值有：内容、更新时间、用户昵称、具体定位（可以根据essayId定位文章，floor定位楼，layer定位层，当然type为FLOOR的只能定位到floor,ESSAY只能定位到essay...）
+    其中，original是被回复的消息，原消息；
+    reply是回复消息。
+    由两条组成一组关系，上面显示回复，下面显示被回复，
+    其中都有type，type有三个值{"ESSAY","FLOOR","LAYER"},
+    需要关心消息的属性值有：内容、更新时间、用户昵称、具体定位
+    （可以根据essayId定位文章，floor定位楼，layer定位层，当然type为FLOOR的只能定位到floor,ESSAY只能定位到essay...）
 ### 我的回复
     地址：/relation/getReplies
     参数：{ "u_id":"2"}
