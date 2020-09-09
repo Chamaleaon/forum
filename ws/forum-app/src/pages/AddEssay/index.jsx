@@ -7,15 +7,9 @@ import MuiAlert from "@material-ui/lab/Alert";
 
 import { reqPublishEssay } from "../../api/essay";
 
-import "./index.less";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
+  root: {},
 }));
 
 export default function FormPropsTextFields(props) {
@@ -39,25 +33,25 @@ export default function FormPropsTextFields(props) {
   };
 
   const handleSubmit = async () => {
-    const cookieArr = document.cookie.split("=")
+    const cookieArr = document.cookie.split("=");
     let data = {
       title,
       content,
       label,
-      publisher: 1*cookieArr[cookieArr.length-1],
+      publisher: 1 * cookieArr[cookieArr.length - 1],
     };
     const res = await reqPublishEssay(data);
     if (res.RE_DESC === "SUCCESS") {
-      setOpen(true)
+      setOpen(true);
       setTimeout(() => {
-        props.history.push('/layout/essays')
+        props.history.push("/layout/essays");
       }, 1000);
     }
   };
 
-  const handleCancel = ()=>{
-    props.history.push('/layout/essays')
-  }
+  const handleCancel = () => {
+    props.history.push("/layout/essays");
+  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -72,12 +66,7 @@ export default function FormPropsTextFields(props) {
   }
 
   return (
-    <form
-      className={classes.root}
-      noValidate
-      autoComplete="off"
-      className="add-form"
-    >
+    <form noValidate autoComplete="off" className="add-form">
       <TextField
         id="outlined-helperText"
         label="title"

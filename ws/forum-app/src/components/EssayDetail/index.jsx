@@ -5,7 +5,6 @@ import { getEssayDetail } from "../../redux/actions/essay";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
@@ -13,14 +12,28 @@ import Comment from "./Comment";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    padding: 20,
   },
   title: {
-    fontSize: 14,
+    fontSize: 30,
+    color: "#263238",
   },
   pos: {
     marginBottom: 12,
   },
+  update_time: {
+    fontSize: 12,
+  },
+  content:{
+    fontSize:18,
+    color:'#37474f'
+  },
+  back:{
+    position:'fixed',
+    width:"80%",
+    bottom:'3%',
+    left:'10%',
+  }
 });
 
 function EssayDetail(props) {
@@ -38,31 +51,34 @@ function EssayDetail(props) {
   const essayInfo = props.essayInfo;
   // console.log(essayInfo)
   return (
-    <>
-      <Button onClick={handleBack} variant="contained" color="primary">
+    <Card className={classes.root}>
+      <Typography className={classes.title} color="textSecondary" gutterBottom>
+        {essayInfo.title ? essayInfo.title : "..."}
+      </Typography>
+      <Typography
+        className={classes.update_time}
+        color="textSecondary"
+        gutterBottom
+      >
+        {essayInfo.update_time ? essayInfo.update_time : "..."}
+      </Typography>
+      <Typography className={classes.content}>
+        {essayInfo.content ? essayInfo.content : "..."}
+      </Typography>
+      <Typography className={classes.pos} color="textSecondary">
+        label:{essayInfo.label?essayInfo.label:"未知"}
+      </Typography>
+      <Typography variant="body2" component="div">
+        <Comment
+          floor={essayInfo.floor || []}
+          essay={props.match.params.e_id}
+          publisher={essayInfo.publisher}
+        />
+      </Typography>
+      <Button onClick={handleBack} variant="contained" color="primary" className={classes.back}>
         Back
       </Button>
-      <Card className={classes.root}>
-        <CardContent>
-          <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
-            title:{essayInfo.title}
-          </Typography>
-          <Typography variant="h5" component="h2">
-            content:{essayInfo.content}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            label:{essayInfo.label}
-          </Typography>
-          <Typography variant="body2" component="div">
-            <Comment floor={essayInfo.floor || []} essay={props.match.params.e_id} publisher = {essayInfo.publisher} />
-          </Typography>
-        </CardContent>
-      </Card>
-    </>
+    </Card>
   );
 }
 

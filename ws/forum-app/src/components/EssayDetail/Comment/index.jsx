@@ -27,8 +27,40 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   secRoot: {
-    width: "100%",
-    backgroundColor: "#ccc",
+    width: "90%",
+    backgroundColor: "#eee",
+    borderRadius: 10,
+    padding: 10,
+  },
+  allComment: {
+    fontSize: 20,
+    paddingTop: 20,
+  },
+  commentContaint: {
+    padding: 10,
+  },
+  publisherName: {
+    fontSize: 25,
+  },
+  creationTime: {
+    color: "#9e9e9e",
+    padding: 10,
+  },
+  content: {
+    fontSize: 18,
+    textIndent: 18,
+  },
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "flex-end",
+    padding: 50,
+  },
+  layerName: {
+    fontSize: 20,
+  },
+  layerContent: {
+    fontSize: 18,
+    textIndent: 18,
   },
 }));
 
@@ -51,7 +83,6 @@ function Comment(props) {
   const classes = useStyles();
   const [drawerState, setDawerState] = useState(false);
   const [content, setContent] = useState("");
-
   const toggleDrawer = () => {
     setDawerState(false);
   };
@@ -190,9 +221,9 @@ function Comment(props) {
     }
   };
 
-  const handleToChange = ()=>{
-    props.history.push(`/changeessay/${props.match.params.e_id}`)
-  }
+  const handleToChange = () => {
+    props.history.push(`/changeessay/${props.match.params.e_id}`);
+  };
 
   return (
     <div className={classes.root}>
@@ -213,54 +244,61 @@ function Comment(props) {
           修改文章
         </Button>
       )}
-      <div>评论内容:</div>
-      <List component="nav" aria-label="main mailbox folders">
+      <div className={classes.allComment}>全部评论:</div>
+      <div>
         {props.floor.map((item) => {
           return (
             <div key={item.f_id}>
-              <ListItem>
-                <ListItemIcon>{item.publisher_name}</ListItemIcon>
-                <ListItemText primary={item.content} />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={replyToComment(1, item)}
-                >
-                  回复此楼
-                </Button>
-                {publisher === item.publisher && (
+              <div className={classes.commentContaint}>
+                <div className={classes.publisherName}>
+                  {item.publisher_name}
+                </div>
+                <div className={classes.creationTime}>{item.creation_time}</div>
+                <div className={classes.content}>{item.content}</div>
+                <div className={classes.buttonWrapper}>
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleDel("floor", item.f_id)}
+                    onClick={replyToComment(1, item)}
                   >
-                    删除
+                    回复此楼
                   </Button>
-                )}
-              </ListItem>
-              {item.layer.length && (
-                <div>
-                  二级评论:
-                  <List className={classes.secRoot}>
-                    {item.layer.length > 0 &&
-                      item.layer.map((secItem) => {
-                        return (
-                          <ListItem key={secItem.l_id}>
-                            ##
-                            <div>
-                              {secItem.replied_lid !== -1 ? (
-                                <span>
-                                  {secItem.publisher_name}回复
+                  {publisher === item.publisher && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleDel("floor", item.f_id)}
+                    >
+                      删除
+                    </Button>
+                  )}
+                </div>
+              </div>
+              {item.layer.length > 0 && (
+                <div className={classes.secRoot}>
+                  {item.layer.length > 0 &&
+                    item.layer.map((secItem) => {
+                      return (
+                        <div key={secItem.l_id}>
+                          <div className={classes.layerName}>
+                            {secItem.publisher_name}
+                          </div>
+                          <div className={classes.layerContent}>
+                            <div style={{ fontSize: "10%" }}>
+                              {secItem.creation_time}
+                            </div>
+                            {secItem.replied_lid !== -1 && (
+                              <span>
+                                {secItem.publisher_name}回复#
+                                <span style={{ color: "#69f0ae" }}>
                                   {secItem.responder_name}
                                 </span>
-                              ) : (
-                                <span>{secItem.publisher_name}回复楼主</span>
-                              )}
-                            </div>
-                            <ListItemIcon>
-                              NickName:{secItem.publisher_name}
-                            </ListItemIcon>
-                            <ListItemText primary={secItem.content} />
+                                :&nbsp;&nbsp;&nbsp;
+                              </span>
+                            )}
+                            {secItem.content}
+                          </div>
+                          <div className={classes.buttonWrapper}>
                             <Button
                               variant="contained"
                               color="primary"
@@ -277,16 +315,16 @@ function Comment(props) {
                                 删除
                               </Button>
                             )}
-                          </ListItem>
-                        );
-                      })}
-                  </List>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               )}
             </div>
           );
         })}
-      </List>
+      </div>
       <Drawer anchor={"bottom"} open={drawerState} onClose={toggleDrawer}>
         <TextField
           id="outlined-basic"
