@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 
-import List from "../../components/NewsList";
+// import List from "../../components/NewsList";
 
 import "./index.less";
 
@@ -15,10 +15,11 @@ import "./index.less";
   removeMyessaySync,
 })
 class Mine extends Component {
-  handleSearchMine = () => {
-    this.props.getMyEssay({
+  handleSearchMine = async () => {
+    await this.props.getMyEssay({
       id: this.publisherId,
     });
+    this.props.history.push("/list/1");
   };
   // publisherId = null; //实例上的属性可以不写
 
@@ -38,13 +39,18 @@ class Mine extends Component {
     this.setState({});
   };
 
+  handleSearchMyMessage = () => {
+    this.props.history.push("/messages");
+  };
+
   render() {
     const cookieArr = document.cookie.split("=");
     const publisherId = 1 * cookieArr[cookieArr.length - 1];
     this.publisherId = publisherId;
     return (
       <>
-        <List essay={this.props.myEssay} />
+        {/* <List essay={this.props.myEssay} /> */}
+
         <div className="option-in-mine">
           {publisherId ? (
             <>
@@ -53,7 +59,14 @@ class Mine extends Component {
                 color="primary"
                 onClick={this.handleSearchMine}
               >
-                搜索我的帖子
+                我的帖子
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSearchMyMessage}
+              >
+                与我相关
               </Button>
               <Button
                 variant="contained"

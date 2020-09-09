@@ -3,15 +3,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
-import TelegramIcon from '@material-ui/icons/Telegram';
+import TelegramIcon from "@material-ui/icons/Telegram";
+import Button from "@material-ui/core/Button";
 
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import avatar from "./1.png";
 
@@ -28,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "120%",
     fontWeight: "bold",
     color: "#424242",
-    display:'flex',
-    flexGrow:1,
-    padding:'2%',
-    border:"2px solid #d1ff33",
-    borderRadius:'10px'
+    display: "flex",
+    flexGrow: 1,
+    padding: "2%",
+    border: "2px solid #d1ff33",
+    borderRadius: "10px",
   },
   card: {
     width: "100%",
@@ -62,7 +63,12 @@ const useStyles = makeStyles((theme) => ({
     textIndent: "10%",
     color: "#333",
   },
-  time: {},
+  return: {
+    width:'80%',
+    position:'fixed',
+    bottom:10,
+    left:40
+  },
 }));
 
 function NewsList(props) {
@@ -74,15 +80,24 @@ function NewsList(props) {
     }
   };
 
+  let essay = props.essay;
+  //判断是否是路由组件展示，如果有flag，则展示myEssay中的数据
+  if (props.match.params.flag === "1") {
+    essay = props.myEssay;
+    // console.log(essay)
+  }
+
   return (
     <div className={classes.root}>
       <Grid item xs={12}>
-        <Typography variant="h6" className={classes.title}>
-          Essays
-        </Typography>
+        {essay.length > 0 && (
+          <Typography variant="h6" className={classes.title}>
+            Essays
+          </Typography>
+        )}
         <div className={classes.demo}>
           <List dense={false} onClick={handleItemCilck}>
-            {props.essay.map((item) => {
+            {essay.map((item) => {
               return (
                 <ListItem key={item.e_id}>
                   <Card className={classes.card}>
@@ -99,7 +114,7 @@ function NewsList(props) {
                         </div>
                       </div>
                       <div className={classes.title}>
-                        <TelegramIcon style={{marginRight:"10%"}} />
+                        <TelegramIcon style={{ marginRight: "10%" }} />
                         <div>{item.title}</div>
                       </div>
                     </div>
@@ -117,8 +132,22 @@ function NewsList(props) {
           </List>
         </div>
       </Grid>
+      {props.match.params.flag === "1" && (
+        <Button
+          className={classes.return}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            props.history.push("/layout/mine");
+          }}
+        >
+          返回
+        </Button>
+      )}
     </div>
   );
 }
 
-export default withRouter(NewsList);
+export default withRouter(
+  connect((state) => ({ myEssay: state.essay.myEssay }))(NewsList)
+);

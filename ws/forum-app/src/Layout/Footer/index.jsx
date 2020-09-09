@@ -41,7 +41,7 @@ function SimpleBottomNavigation(props) {
       showLabels
       className={classes.root}
     > 
-      <BottomNavigationAction label="News" icon={<ModeCommentIcon />} />  
+      <BottomNavigationAction label="Essays" icon={<ModeCommentIcon />} />  
       <BottomNavigationAction label="Mine" icon={<PersonIcon />} />
     </BottomNavigation>
   );

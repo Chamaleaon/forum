@@ -16,6 +16,8 @@ import SignUp from './pages/LoginAndRegister/SignUp'
 import AddEssay from './pages/AddEssay'
 import ChangeEssay from './pages/ChangeEssay'
 import EssayDetail from './components/EssayDetail'
+import Messages from './components/Messages'
+import List from './components/NewsList'
 
 
 export default function App() {
@@ -28,6 +30,8 @@ export default function App() {
       <Route path="/addessay" component={AddEssay} />
       <Route path="/changeessay/:e_id" component={ChangeEssay} />
       <Route path="/essaydetail/:e_id" component={EssayDetail} />
+      <Route path="/messages" component={Messages} />
+      <Route path="/list/:flag?" component={List}></Route>
     </Router>
   );
 }
