@@ -15,6 +15,8 @@
 <a href="#删除贴子" title="删除贴子">删除贴子</a><br />
 <a href="#发言删除" title="发言删除">删除一级评论</a><br />
 <a href="#回复删除" title="回复删除">删除二级评论</a><br />
+<a href="#我的消息" title="我的消息">我的消息</a><br />
+<a href="#我的回复" title="我的回复">我的回复</a><br />
 
 ## 用户相关API
 ### 用户注册
@@ -225,3 +227,57 @@
     返回：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
         bad:{"RE_DESC":"删除失败","RE_CODE":1003}
+
+## 其他API
+### 我的消息
+    地址：/relation/getMessages
+    参数：{ "u_id":"2"}
+    返回：
+    {
+        "RES": [
+            {
+                "original": {
+                    "creation_time": "2020-09-08 21:08:06",
+                    "publisher_name": "zs",
+                    "level": 1,
+                    "responder": 4,
+                    "type": "LAYER",
+                    "essayId": 17,
+                    "content": "呵呵呵呵呵",
+                    "update_time": "2020-09-08 21:08:06",
+                    "replied_lid": -1,
+                    "publisher": 2,
+                    "responder_name": "cyf",
+                    "l_id": 83,
+                    "floor": 39
+                },
+                "reply": {
+                    "creation_time": "2020-09-08 21:08:13",
+                    "publisher_name": "zs",
+                    "level": 2,
+                    "responder": 2,
+                    "type": "LAYER",
+                    "essayId": 17,
+                    "content": "哎呦，不错哦",
+                    "update_time": "2020-09-08 21:08:13",
+                    "replied_lid": 83,
+                    "publisher": 2,
+                    "responder_name": "zs",
+                    "l_id": 84,
+                    "floor": 39
+                }
+            }
+        ],
+        "RE_DESC": "SUCCESS",
+        "RE_CODE": 0
+    }
+    其中，original是被回复的消息，原消息；
+    reply是回复消息。
+    由两条组成一组关系，上面显示回复，下面显示被回复，
+    其中都有type，type有三个值{"ESSAY","FLOOR","LAYER"},
+    需要关心消息的属性值有：内容、更新时间、用户昵称、具体定位
+    （可以根据essayId定位文章，floor定位楼，layer定位层，当然type为FLOOR的只能定位到floor,ESSAY只能定位到essay...）
+### 我的回复
+    地址：/relation/getReplies
+    参数：{ "u_id":"2"}
+    返回内容与我的消息类似，相关要求也一样

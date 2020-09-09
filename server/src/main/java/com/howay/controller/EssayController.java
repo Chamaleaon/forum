@@ -18,6 +18,7 @@ import com.howay.dao.EssayDao;
 import com.howay.dao.FloorDao;
 import com.howay.dao.LayerDao;
 import com.howay.dao.UserDao;
+import com.howay.service.RelationService;
 import com.howay.util.JsonUtil;
 
 /**
@@ -42,6 +43,9 @@ public class EssayController {
 
 	@Autowired
 	FloorDao floorDao;
+
+	@Autowired
+	RelationService relationService;
 
 	/**
 	 * 写贴子
@@ -142,6 +146,12 @@ public class EssayController {
 			List<Map<String, Object>> fList = floorDao.findByEID(e_id);
 			for (Map<String, Object> floor : fList) {
 				int f_id = (int) floor.get("f_id");
+				relationService.delete("FLOOR", f_id);
+				List<Map<String,Object>> layerList = layerDao.findByFloorID(f_id);
+				for(Map<String,Object> layer:layerList){
+					int l_id = (int) layer.get("l_id");
+					relationService.delete("LAYER", l_id);
+				}
 				layerDao.deleteByFloor(f_id);// 删除二级评论
 			}
 			floorDao.deleteByEssay(e_id); // 删除一级评论
