@@ -4,11 +4,10 @@ import { connect } from "react-redux";
 import { getMyEssay, removeMyessaySync } from "../../redux/actions/essay";
 import { Link } from "react-router-dom";
 
-import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
 
-// import List from "../../components/NewsList";
 
-import "./index.less";
+import mineStyles from './mine.module.less'
 
 @connect((state) => ({ myEssay: state.essay.myEssay }), {
   getMyEssay,
@@ -34,9 +33,8 @@ class Mine extends Component {
       }
     }
     exit();
-    //清空redux中myEssay
+    //退出登录清空redux中myEssay
     this.props.removeMyessaySync();
-    this.setState({});
   };
 
   handleSearchMyMessage = () => {
@@ -48,43 +46,19 @@ class Mine extends Component {
     const publisherId = 1 * cookieArr[cookieArr.length - 1];
     this.publisherId = publisherId;
     return (
-      <>
-        {/* <List essay={this.props.myEssay} /> */}
-
-        <div className="option-in-mine">
-          {publisherId ? (
-            <>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleSearchMine}
-              >
-                我的帖子
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleSearchMyMessage}
-              >
-                与我相关
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleLogout}
-              >
-                下号
-              </Button>
-            </>
-          ) : (
-            <Link to="/signin">
-              <Button variant="contained" color="primary">
-                还没有上号，去登陆
-              </Button>
-            </Link>
-          )}
-        </div>
-      </>
+      <div>
+        {publisherId ? (
+          <>
+            <Card className={mineStyles.card} onClick={this.handleSearchMine}>我的帖子</Card>
+            <Card className={mineStyles.card} onClick={this.handleSearchMyMessage}>与我相关</Card>
+            <Card className={mineStyles.card} onClick={this.handleLogout}>下号</Card>
+          </>
+        ) : (
+          <Link to="/signin" style={{ textDecoration: "none" }}>
+            <Card className={mineStyles.card}>还没有上号，去登陆</Card>
+          </Link>
+        )}
+      </div>
     );
   }
 }

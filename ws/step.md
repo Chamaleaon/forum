@@ -67,3 +67,13 @@ login/register
 ### Mine 三个按钮改成菜单 路由跳转 
 
 ### 与我相关 样式 锚点定位跳转到文章 
+
+
+### 内网穿透 Invalid Host header 问题解决  
+- 根目录创建 .env.development.local 文件 
+- DANGEROUSLY_DISABLE_HOST_CHECK=true 
+### 运行mvn spring-boot:run命令启动服务
+ 
+
+
+### 布局文字溢出问题 

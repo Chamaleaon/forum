@@ -3,6 +3,13 @@ import React, { Component } from "react";
 import { getMyMessages, getMyReplys } from "../../redux/actions/messages";
 import { connect } from "react-redux";
 
+import Card from "@material-ui/core/Card";
+import Divider from "@material-ui/core/Divider";
+import Avatar from "@material-ui/core/Avatar";
+import msgStyle from "./msg.module.less";
+
+import avatar from "./1.png";
+
 @connect(
   (state) => ({
     myMessages: state.message.myMessages,
@@ -24,51 +31,66 @@ class Messages extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleReturn}>返回</button>
-        <div>
-          列表一 我的消息
+        <Card className={msgStyle.return} onClick={this.handleReturn}>
+          返回
+        </Card>
+        <Card className={msgStyle.card}>
+          <div className={msgStyle.listName}>我的消息</div>
+
           {this.props.myMessages.map((item, index) => {
             return (
               <div key={index}>
-                <div>原文</div>
+                {/* <div>原文</div> */}
                 <div>
                   {item.original.type === "ESSAY" && (
-                    <span>title:{item.original.title}</span>
+                    <div className={msgStyle.title}>{item.original.title}</div>
                   )}
                 </div>
-                <div>type:{item.original.type}</div>
-                <div>time:{item.original.update_time}</div>
-                <div>content:{item.original.content}</div>
-                <div>回复</div>
-                <div>{item.reply.publisher_name}回复到###：</div>
-                <div>time:{item.reply.update_time}</div>
-                <div>type:{item.reply.type}</div>
-                <div>content:{item.reply.content}</div>
+                {/* <div>type:{item.original.type}</div> */}
+                <div className={msgStyle.time}>{item.original.update_time}</div>
+                <div className={msgStyle.content}>{item.original.content}</div>
+                {/* <div>回复</div> */}
+                <Divider />
+                <div className={msgStyle.replyer}>
+                  <Avatar alt="Remy Sharp" src={avatar} />
+                  <span>{item.reply.publisher_name}&nbsp;#:</span>
+                </div>
+                <div className={msgStyle.time}>
+                  time:{item.reply.update_time}
+                </div>
+                {/* <div>type:{item.reply.type}</div> */}
+                <div className={msgStyle.content}>{item.reply.content}</div>
               </div>
             );
           })}
-        </div>
-        <div>
-          列表二 我的回复
+        </Card>
+        <Card className={msgStyle.card}>
+          <div className={msgStyle.listName}>我的回复</div>
           {this.props.myReplys.map((item, index) => {
             return (
               <div key={index}>
-                <div>原文</div>
-                <div>
-                  {item.original.type === "ESSAY" && <span>title:{item.original.title}</span>}
+                {/* <div>原文</div> */}
+                <div className={msgStyle.replyer}>
+                  <Avatar alt="Remy Sharp" src={avatar} />
+                  <span>{item.original.publisher_name}</span>
                 </div>
-                <div>time:{item.original.update_time}</div>
-                <div>type:{item.original.type}</div>
-                <div>content:{item.original.content}</div>
-                <div>我回复--{item.original.publisher_name}--的消息</div>
-                <div>回复内容</div>
-                <div>type:{item.reply.type}</div>
-                <div>time:{item.reply.update_time}</div>
-                <div>content:{item.reply.content}</div>
+                <div>
+                  {item.original.type === "ESSAY" && (
+                    <div className={msgStyle.title}>{item.original.title}</div>
+                  )}
+                </div>
+                <div className={msgStyle.time}>{item.original.update_time}</div>
+                {/* <div>type:{item.original.type}</div> */}
+                <div className={msgStyle.content}>{item.original.content}</div>
+                <div>我&nbsp;#:</div>
+                {/* <div>回复内容</div> */}
+                {/* <div>type:{item.reply.type}</div> */}
+                <div className={msgStyle.time}>{item.reply.update_time}</div>
+                <div className={msgStyle.content}>{item.reply.content}</div>
               </div>
             );
           })}
-        </div>
+        </Card>
       </div>
     );
   }

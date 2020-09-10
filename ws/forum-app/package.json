@@ -43,7 +43,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://howay.utools.club/",
+  "proxy": "http://localhost:8081",
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8"
   }
