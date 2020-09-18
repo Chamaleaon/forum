@@ -84,12 +84,6 @@ public class UserController {
 				return res.toJSONString();
 			}
 		}
-		Cookie cookies[] = request.getCookies();
-		for (Cookie cookie : cookies) {
-			Cookie nc = new Cookie(cookie.getName(),null);
-			nc.setMaxAge(0);
-			response.addCookie(nc);
-		}
 		res = JsonUtil.toJSONObject(1002, "用户名或密码错误");
 		return res.toJSONString();
 	}
