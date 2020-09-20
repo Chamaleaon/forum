@@ -52,6 +52,10 @@ public class User {
 		this.password = password;
 	}
 	
+	private void test(){
+		System.out.println("******test******");
+	}
+
 	public static void main(String[] args) {
 		User user = Builder.of(User::new)  //构建器用法
 				.with(User::setU_id, 1)
@@ -60,6 +64,7 @@ public class User {
 				.with(User::setEmail, "35@qq.com")
 				.build();
 		System.out.println(user.getName());
+		user.test();
 	}
 	
 

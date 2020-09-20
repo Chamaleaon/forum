@@ -58,28 +58,41 @@ public class UserController {
 	 */
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = { RequestMethod.POST })
-	public String login(String name,String password,HttpSession session,HttpServletRequest request,HttpServletResponse response) {
-		
+	public String login(String name, String password, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
 		JSONObject res;
-		List<Map<String,Object>> list = userDao.getUserInfo(name);
-		if(list.size()>0) {
-			if(list.get(0).get("password").equals(password)) {
-				//System.out.println(name);
+		List<Map<String, Object>> list = userDao.getUserInfo(name);
+
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+		response.setHeader("Allow", "*");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		// 接收跨域的cookie
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		if (list.size() > 0) {
+			if (list.get(0).get("password").equals(password)) {
+				// System.out.println(name);
 				int maxAge = -1;
 				session.setAttribute("cl_name", name);
-				Cookie nameCookie = new Cookie("cl_name",name);
+				Cookie nameCookie = new Cookie("cl_name", name);
 				nameCookie.setPath("/");
-				nameCookie.setMaxAge(maxAge); 
+				nameCookie.setMaxAge(maxAge);
 				response.addCookie(nameCookie);
-				
+
 				String id = list.get(0).get("u_id").toString();
 				session.setAttribute("cl_id", id);
-				Cookie idCookie = new Cookie("cl_id",id);
+				Cookie idCookie = new Cookie("cl_id", id);
 				idCookie.setPath("/");
-				idCookie.setMaxAge(maxAge); 
+				idCookie.setMaxAge(maxAge);
 				response.addCookie(idCookie);
-				
-				//System.out.println("ok");
+
+				session.setAttribute("id", id);
+				Cookie idCookie2 = new Cookie("id", id);
+				idCookie2.setPath("/");
+				idCookie2.setMaxAge(maxAge);
+				response.addCookie(idCookie2);
+
+				// System.out.println("ok");
 				res = JsonUtil.toJSONObject(0, "SUCCESS");
 				return res.toJSONString();
 			}
@@ -87,7 +100,7 @@ public class UserController {
 		res = JsonUtil.toJSONObject(1002, "用户名或密码错误");
 		return res.toJSONString();
 	}
-	
+
 	/**
 	 * 根据用户id获取用户信息
 	 */
@@ -96,10 +109,10 @@ public class UserController {
 	public String getInfoById(@RequestBody JSONObject req) {
 		int u_id = req.getIntValue("u_id");
 		JSONObject res;
-		List<Map<String,Object>> list = userDao.getUserInfoById(u_id);
-		if(list.size()>0) {
+		List<Map<String, Object>> list = userDao.getUserInfoById(u_id);
+		if (list.size() > 0) {
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
-			for(Map<String,Object> user:list) {
+			for (Map<String, Object> user : list) {
 				res.putAll(user);
 			}
 			return res.toJSONString();
@@ -107,6 +120,5 @@ public class UserController {
 		res = JsonUtil.toJSONObject(1002, "用户不存在");
 		return res.toJSONString();
 	}
-		
 
 }

@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - User",
+            "request": "launch",
+            "mainClass": "com.howay.entity.User",
+            "projectName": "forum-server"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-App<forum-server>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
