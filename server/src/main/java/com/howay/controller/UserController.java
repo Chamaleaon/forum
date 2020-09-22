@@ -86,12 +86,6 @@ public class UserController {
 				idCookie.setMaxAge(maxAge);
 				response.addCookie(idCookie);
 
-				session.setAttribute("id", id);
-				Cookie idCookie2 = new Cookie("id", id);
-				idCookie2.setPath("/");
-				idCookie2.setMaxAge(maxAge);
-				response.addCookie(idCookie2);
-
 				// System.out.println("ok");
 				res = JsonUtil.toJSONObject(0, "SUCCESS");
 				return res.toJSONString();

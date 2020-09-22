@@ -107,7 +107,7 @@
     参数：{"id":1}
     返回内容：
         {"RES":[{"creation_time":"2020-09-03 21:55:39","update_time":"2020-09-03 at 21:55:39 CST","publisher":1,"e_id":2,"label":"test","title":"测试2","content":"这是测试内容，this is a test essay"}],"RE_DESC":"SUCCESS","RE_CODE":0}
-### 查找某个贴子内容一级全部一级评论和二级评论
+### 查找某个贴子内容以及全部一级评论和二级评论
     地址：/essay/find
     参数：{"e_id":1} //该贴子id
     返回内容：
