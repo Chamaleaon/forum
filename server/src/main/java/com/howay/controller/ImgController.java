@@ -21,51 +21,38 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
+import com.howay.util.PathsUtil;
 
 @RestController
-@RequestMapping(value = "/sunway/image")
+@RequestMapping(value = "/img")
 public class ImgController {
-
 	// 生产
-	public static final String BASE_DIR = "";
-	// public static final String BASE_DIR = "C:\\saveZipdirectory\\sunweiImg\\";
-	public static final String BASE_UPLOAD_DIR = "";
-	private final String IMG_URL_PATH = "";
+	public static final String BASE_DIR = PathsUtil.IMG_DIR;
+	public static final String IMG_URL = PathsUtil.IMG_URL;
 
 	@CrossOrigin
 	@RequestMapping(value = "/upload", method = { RequestMethod.POST, RequestMethod.GET })
 	public String upload(HttpSession session, MultipartFile file) throws IOException {
-
+		System.out.println("getName:"+file.getOriginalFilename());
+		System.out.println("getContentType:"+file.getContentType());
+		System.out.println("getSize:"+file.getSize());
 		InputStream is = file.getInputStream();
-		UUID uuid = UUID.randomUUID();
-		File of = new File(BASE_DIR + uuid);
-		of.createNewFile();
-		FileOutputStream fos = new FileOutputStream(of);
-		fos.write(file.getBytes());
-		fos.flush();
-		fos.close();
-		is.close();
+		//UUID uuid = UUID.randomUUID();
+		File dir = new File(BASE_DIR);
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
 
 		String originalFileName = file.getOriginalFilename();
-		String type = originalFileName.substring(originalFileName.lastIndexOf("."));
-		String newFileName = uuid + type;
-		File temp = new File(BASE_UPLOAD_DIR + "temp" + type);
+		File temp = new File(BASE_DIR + originalFileName);
+		FileOutputStream fos = new FileOutputStream(temp);
 		temp.createNewFile();
-		fos = new FileOutputStream(temp);
 		fos.write(file.getBytes());
 		fos.flush();
 		fos.close();
 		is.close();
-		//ImgCompressUtil.compress(temp, 1f, 0.5f, BASE_UPLOAD_DIR + newFileName);
-		temp.delete();
 		JSONObject jo = new JSONObject();
-		jo.put("imgId", uuid.toString());
-		jo.put("img_url", IMG_URL_PATH + newFileName.toString());
-		jo.put("code", 0);
-		jo.put("msg", "SUCCESS");
-		JSONObject jo1 = new JSONObject();
-		jo1.put("src", "/sunway/image/get/" + uuid.toString());
-		jo.put("data", jo1);
+		jo.put("img_url", IMG_URL + originalFileName);
 		return jo.toJSONString();
 	}
 

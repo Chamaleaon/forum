@@ -1,8 +1,7 @@
 package com.howay.util;
 
 public class PathsUtil {
-	public static String DIR = "";
-	public static String IMG_DIR = "";
-	public static String URL = "";
+	public static final String IMG_DIR = "D:/imgs/";
+	public static final String IMG_URL = "http://localhost:8089/";
 	
 }
