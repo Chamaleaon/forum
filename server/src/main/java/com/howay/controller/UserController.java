@@ -44,11 +44,13 @@ public class UserController {
 		String password = reqjo.getString("password");
 		String email = reqjo.getString("email");
 		String homePage = reqjo.getString("homePage");
+		String avatar = reqjo.getString("avatar");
+		String info = reqjo.getString("info");
 		if (null == name || null == password) {
 			res = JsonUtil.toJSONObject(1001, "名字或密码为必填");
 			return res.toJSONString();
 		}
-		userDao.insertUser(name, password, email, homePage);
+		userDao.insertUser(name, password, email, homePage,avatar,info);
 		res = JsonUtil.toJSONObject(0, "SUCCESS");
 		return res.toJSONString();
 	}
@@ -113,6 +115,49 @@ public class UserController {
 		}
 		res = JsonUtil.toJSONObject(1002, "用户不存在");
 		return res.toJSONString();
+	}
+
+	/**
+	 * 用户信息修改
+	 */
+	@CrossOrigin
+	@RequestMapping(value = "/update", method = { RequestMethod.POST })
+	public String updateUser(@RequestBody JSONObject req) {
+		int u_id = req.getIntValue("u_id");
+		String name = req.getString("name");
+		String email = req.getString("email");
+		String homePage = req.getString("homePage");
+		String avatar = req.getString("avatar");
+		String info = req.getString("info");
+		String privacy = req.getString("privacy");
+		String diary_privacy = req.getString("diary_privacy");
+		JSONObject res;
+		List<Map<String, Object>> list = userDao.getUserInfoById(u_id);
+		if (list.size() > 0) {
+			userDao.updateUser(u_id, name, email, homePage, avatar, info,privacy,diary_privacy);
+			res = JsonUtil.toJSONObject(0, "SUCCESS");
+			return res.toJSONString();
+		}
+		res = JsonUtil.toJSONObject(1004, "更新失败");
+		return res.toJSONString();
+	}
+
+	/**
+	 * 
+	 * 验证用户名是否存在
+	 */
+	@CrossOrigin
+	@RequestMapping(value = "/isExist", method = { RequestMethod.POST })
+	public String isExist(@RequestBody JSONObject req) {
+		String name = req.getString("name");
+		JSONObject res;
+		List<Map<String, Object>> list = userDao.getUserInfo(name);
+		if(list.size()>0){ //用户名存在
+			res = JsonUtil.toJSONObject(1005, "用户名存在");
+			return res.toJSONString();
+		}
+		res = JsonUtil.toJSONObject(0, "用户不存在");
+			return res.toJSONString();
 	}
 
 }

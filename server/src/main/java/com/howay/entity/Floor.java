@@ -19,6 +19,9 @@ public class Floor {
 	private String creation_time;
 	private String update_time;
 	private int level; //具体几楼，比如1楼，按楼层排序
+	private int support; //支持数、点赞数
+	private int oppose;//反对数
+	private String info;//自定义
 	
 	public int getF_id() {
 		return f_id;
@@ -61,6 +64,30 @@ public class Floor {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public int getSupport() {
+		return support;
+	}
+
+	public void setSupport(int support) {
+		this.support = support;
+	}
+
+	public int getOppose() {
+		return oppose;
+	}
+
+	public void setOppose(int oppose) {
+		this.oppose = oppose;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	
 	

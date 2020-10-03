@@ -61,10 +61,11 @@ public class FloorController {
 		String content = req.getString("content");
 		int publisher = req.getIntValue("publisher");
 		int level = req.getIntValue("level");
+		String info = req.getString("info");
 		List<Map<String,Object>> list = userDao.getUserInfoById(publisher);
 		List<Map<String,Object>> list2 = essayDao.byEId(essay);
 		if(list.size()>0 && list2.size()>0) { //用户存在且文章存在
-			floorDao.insert(essay, content, time, time, publisher, level);
+			floorDao.insert(essay, content, time, time, publisher, level,info);
 			int f_id = floorDao.getNewId();
 			int sender_id = (int) list2.get(0).get("publisher");
 			relationService.insert(sender_id,publisher,"ESSAY","FLOOR",essay, f_id, time);

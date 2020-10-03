@@ -62,9 +62,11 @@ public class EssayController {
 		String content = req.getString("content");
 		int publisher = req.getIntValue("publisher");
 		String label = req.getString("label");
+		String type = req.getString("type");
+		String info = req.getString("info");
 		List<Map<String, Object>> list = userDao.getUserInfoById(publisher);
 		if (list.size() > 0) { // 用户存在
-			essayDao.insert(title, content, time, time, publisher, label);
+			essayDao.insert(title, content, time, time, publisher, label,type,info);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
 			return res.toJSONString();
 		}

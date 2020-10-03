@@ -39,26 +39,46 @@ public interface EssayDao {
 			" user b where a.publisher=b.u_id")
 	public List<Map<String,Object>> search(@Param(value = "key") String key);
 	
-	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label) "
-			+ "VALUES(#{title},#{content},#{creation_time},#{update_time},#{publisher},#{label})")
+	@Insert("insert into essay(title,content,creation_time,update_time,publisher,label,type,info) "
+			+ "VALUES(#{title},#{content},#{creation_time},#{update_time},#{publisher},#{label},#{type},#{info})")
 	public int insert(
 		@Param(value = "title") String title,
 		@Param(value = "content") String content,
 		@Param(value = "creation_time") String creation_time,
 		@Param(value = "update_time") String update_time,
 		@Param(value = "publisher") int publisher,
-		@Param(value = "label") String label
+		@Param(value = "label") String label,
+		@Param(value = "type") String type,
+		@Param(value = "info") String info
 	);
 	
 	@Delete("delete from essay where e_id=#{e_id};") 
 	public int delete(@Param(value = "e_id") int e_id);
 	
+	/**更新文章 */
 	@Update("update essay set title=#{title},content=#{content},update_time=#{time} where e_id=#{e_id}")
 	public int update(
 		@Param(value = "e_id") int e_id,
 		@Param(value = "title") String title,
 		@Param(value = "content") String content,
 		@Param(value = "time") String time
-			);
+	);
+
+	/**更新其他 */
+	@Update("update essay set label=#{label},info=#{info},privacy=#{privacy},support=#{support},"
+		+"oppose=#{oppose},comment=#{comment},browse=#{browse} where e_id=#{e_id}")
+	public int updateOthers(
+		@Param(value = "e_id") int e_id,
+		@Param(value = "label") int label,
+		@Param(value = "info") String info,
+		@Param(value = "privacy") String privacy,
+		@Param(value = "support") int support,
+		@Param(value = "oppose") int oppose,
+		@Param(value = "comment") int comment,
+		@Param(value = "browse") int browse
+	);
+	/**更新时间 */
+	@Update("update essay set update_time=#{time} where e_id=#{e_id}")
+	public int updateTime(@Param(value = "e_id") int e_id,@Param(value = "time") String time);
 	
 }

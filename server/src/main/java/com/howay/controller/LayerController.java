@@ -60,6 +60,7 @@ public class LayerController {
 		int responder = req.getIntValue("responder");
 		int level = req.getIntValue("level");
 		int replied_lid = req.getIntValue("replied_lid");
+		String info = req.getString("info");
 		List<Map<String, Object>> uList = userDao.getUserInfoById(publisher);
 		List<Map<String, Object>> uList2 = userDao.getUserInfoById(responder);
 		List<Map<String, Object>> list = floorDao.byId(floor);
@@ -81,7 +82,7 @@ public class LayerController {
 			}
 		}
 		if (list.size() > 0 && isOk && uList.size() > 0 && uList2.size() > 0) { // 用户存在且楼层存在且回复存在
-			layerDao.insert(floor, content, time, time, publisher, responder, level, replied_lid);
+			layerDao.insert(floor, content, time, time, publisher, responder, level, replied_lid,info);
 			int st_id = layerDao.getNewId();
 			relationService.insert(responder, publisher, r_type, "LAYER", rt_id, st_id, time);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");

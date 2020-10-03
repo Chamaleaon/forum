@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -30,15 +31,16 @@ public interface FloorDao {
 			@Param(value = "f_id") int f_id,
 			@Param(value = "publisher") int publisher);
 	
-	@Insert("insert into floor(essay,content,creation_time,update_time,publisher,level) "
-			+ "VALUES(#{essay},#{content},#{creation_time},#{update_time},#{publisher},#{level})")
+	@Insert("insert into floor(essay,content,creation_time,update_time,publisher,level,info) "
+			+ "VALUES(#{essay},#{content},#{creation_time},#{update_time},#{publisher},#{level},#{info})")
 	public int insert(
 		@Param(value = "essay") int essay,
 		@Param(value = "content") String content,
 		@Param(value = "creation_time") String creation_time,
 		@Param(value = "update_time") String update_time,
 		@Param(value = "publisher") int publisher,
-		@Param(value = "level") int level
+		@Param(value = "level") int level,
+		@Param(value = "info") String info
 	);
 	
 	@Select("SELECT @@IDENTITY")
@@ -49,5 +51,12 @@ public interface FloorDao {
 	
 	@Delete("delete from floor where essay=#{essay};")
 	public int deleteByEssay(@Param(value = "essay") int essay);
+
+	@Update("update floor set support=#{support},oppose=#{oppose}, where f_id=#{f_id}")
+	public int update(
+		@Param(value = "f_id") int f_id,
+		@Param(value = "support") int support,
+		@Param(value = "oppose") int oppose
+	);
 
 }

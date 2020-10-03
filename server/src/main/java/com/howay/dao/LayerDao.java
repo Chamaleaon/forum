@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -42,8 +43,8 @@ public interface LayerDao {
 			@Param(value = "l_id") int l_id,
 			@Param(value = "publisher") int publisher);
 	
-	@Insert("insert into layer(floor,content,creation_time,update_time,publisher,responder,level,replied_lid) "
-			+ "VALUES(#{floor},#{content},#{creation_time},#{update_time},#{publisher},#{responder},#{level},#{replied_lid})")
+	@Insert("insert into layer(floor,content,creation_time,update_time,publisher,responder,level,replied_lid,info) "
+			+ "VALUES(#{floor},#{content},#{creation_time},#{update_time},#{publisher},#{responder},#{level},#{replied_lid},#{info})")
 	public int insert(
 		@Param(value = "floor") int floor,
 		@Param(value = "content") String content,
@@ -52,7 +53,8 @@ public interface LayerDao {
 		@Param(value = "publisher") int publisher,
 		@Param(value = "responder") int responder,
 		@Param(value = "level") int level,
-		@Param(value = "replied_lid") int replied_lid
+		@Param(value = "replied_lid") int replied_lid,
+		@Param(value = "info") String info
 	);
 	
 	@Select("SELECT @@IDENTITY")
@@ -68,4 +70,11 @@ public interface LayerDao {
 	
 	@Delete("delete from layer where floor=#{floor}")
 	public int deleteByFloor(@Param(value="floor") int floor);
+
+	@Update("update layer set support=#{support},oppose=#{oppose}, where l_id=#{l_id}")
+	public int update(
+		@Param(value = "l_id") int l_id,
+		@Param(value = "support") int support,
+		@Param(value = "oppose") int oppose
+	);
 }

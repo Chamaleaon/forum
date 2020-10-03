@@ -20,7 +20,15 @@ public class Essay {
 	private String update_time; //更新时间
 	private int publisher; // 发布者，为楼主id
 	private String label; // 标签
-	
+	private String type;//归类：BLOG/ESSAY/DIARY
+	private String info;//存json字符串，可以为空，允许前端自定义k-v
+
+	private String privacy;//隐私：PUBLIC(公开)/PRIVATE(私密)/ONLYFANS(仅关注之人)
+	private int support; //支持数、点赞数
+	private int oppose;//反对数
+	private int comment;//评论数
+	private int browse;//浏览数
+
 	
 	public int getE_id() {
 		return e_id;
@@ -63,6 +71,62 @@ public class Essay {
 	}
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getPrivacy() {
+		return privacy;
+	}
+
+	public void setPrivacy(String privacy) {
+		this.privacy = privacy;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public int getSupport() {
+		return support;
+	}
+
+	public void setSupport(int support) {
+		this.support = support;
+	}
+
+	public int getOppose() {
+		return oppose;
+	}
+
+	public void setOppose(int oppose) {
+		this.oppose = oppose;
+	}
+
+	public int getComment() {
+		return comment;
+	}
+
+	public void setComment(int comment) {
+		this.comment = comment;
+	}
+
+	public int getBrowse() {
+		return browse;
+	}
+
+	public void setBrowse(int browse) {
+		this.browse = browse;
 	}
 	
 	
