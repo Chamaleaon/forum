@@ -27,7 +27,9 @@
             "name":"zs",
             "password":"123",
             "email":"356@qq.com",
-            "homePage":"howay.site"
+            "homePage":"howay.site",
+            "avatar":null, //头像,无头像传null值，有头像上传头像url，字符串
+            "info":"{}" //前端自定义json字段，自己定义自己解析
         }
     方式：Post
     返回内容：
@@ -55,7 +57,27 @@
         bad:{"RE_DESC":"用户不存在","RE_CODE":1002}
 ### 更新用户信息
     地址：/user/update
-    参数：
+    参数：{
+            "u_id":12, //必填
+            "name":"zsk2gengxin",
+            "password":"123",
+            "email":"356@qq.com",
+            "homePage":"howay.site",
+            "avatar":"http://8089:00000.jpg",
+            "info":"{"sex":0}",
+            "privacy":"PRIVATE",
+            "diary_privacy":"PRIVATE"
+        }
+    返回：{"RE_DESC":"SUCCESS","RE_CODE":0}
+        bad:{"RE_DESC":"更新失败","RE_CODE":1004}
+### 验证用户是否存在
+    地址：/user/isExist
+    参数：{
+        "name":""
+    }
+    返回：{"RE_DESC":"用户不存在","RE_CODE":0}
+        {"RE_DESC":"用户名存在","RE_CODE":1005}
+    /**请注意，这里不存在好坏的返回，看你用在何处，在注册之前验证，只有用户名不存在才允许下一步的注册*/
 ### 忘记密码
 ### 已登录用户直接修改密码
 
@@ -67,7 +89,9 @@
             "title":"测试3",
             "content":"这是测试内容，this is a test essay",
             "publisher":2,   //这个是发布人，楼主id
-            "label":"test"  //发表内容归类，标签
+            "label":"test",  //发表内容归类，标签
+            "type":"ESSAY",  /* 文章类型，分为：BLOG/ESSAY/DIARY 其中BLOG为新闻、资讯、技术等分享类型文章，由系统管理员直接发布，原则上不允许用户进行发布；ESSAY为默认类型，属于圈子，由用户发布并永久属于PULIC类型的文章；DIARY为动态类型，由用户发布，可以自定义隐私：PUBLIC(公开)/PRIVATE(私密)/ONLYFANS(仅关注之人) */
+            "info":"{}" //前端自定义json字段，自己定义自己解析
         }
     返回内容：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
@@ -103,13 +127,15 @@
 
 ### 查找所有贴子
     地址：/essay/all
-    无需传参
+    参数：{
+        "type":"ESSAY" //只返回当前大类的文章
+    }
     返回内容：
         {"RES":[{"creation_time":"2020-09-03 21:54:41","update_time":"2020-09-03 at 21:54:41 CST","publisher":5,"e_id":1,"label":"test","title":"测试","content":"这是测试内容，this is a test essay"},{"creation_time":"2020-09-03 21:56:49","update_time":"2020-09-03 21:56:49","publisher":2,"e_id":3,"label":"test","title":"测试3","content":"这是测试内容，this is a test essay"}],"RE_DESC":"SUCCESS","RE_CODE":0}
         其中RES为结果，即所有贴子的集合
 ### 通过用户id查找贴子
     地址：/essay/byId
-    参数：{"id":1}
+    参数：{"id":1,"type":"ESSAY"} //新增ESSAY
     返回内容：
         {"RES":[{"creation_time":"2020-09-03 21:55:39","update_time":"2020-09-03 at 21:55:39 CST","publisher":1,"e_id":2,"label":"test","title":"测试2","content":"这是测试内容，this is a test essay"}],"RE_DESC":"SUCCESS","RE_CODE":0}
 ### 查找某个贴子内容以及全部一级评论和二级评论
@@ -188,7 +214,8 @@
             "essay":1,  //当前所在贴子id
             "content":"这是测试内容，this is a test essay",
             "publisher":7, //当前评论人id，如果是楼主，前端应显示
-            "level":1 //当前所在楼层，为当前贴子最后一楼level加1
+            "level":1, //当前所在楼层，为当前贴子最后一楼level加1
+            "info":"{}" //前端自定义
         }
     返回：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}
@@ -215,7 +242,8 @@
         "publisher":1, //当前评论人id
         "responder":7, //被回复人id
         "level":1, //所在层数，为当前楼层最后一层加1
-        "replied_lid":5 //回复指向的另外二级评论id，如果为-1，则表示直接回复这楼
+        "replied_lid":5, //回复指向的另外二级评论id，如果为-1，则表示直接回复这楼
+        "info":"{}",//前端自定义
     }
     返回：
         good:{"RE_DESC":"SUCCESS","RE_CODE":0}

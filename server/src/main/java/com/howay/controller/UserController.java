@@ -134,6 +134,27 @@ public class UserController {
 		JSONObject res;
 		List<Map<String, Object>> list = userDao.getUserInfoById(u_id);
 		if (list.size() > 0) {
+			if(null==name){
+				name = (String) list.get(0).get("name");
+			}
+			if(null==email){
+				email = (String) list.get(0).get("email");
+			}
+			if(null==homePage){
+				homePage = (String) list.get(0).get("homePage");
+			}
+			if(null==avatar){
+				avatar = (String) list.get(0).get("avatar");
+			}
+			if(null==info){
+				info = (String) list.get(0).get("info");
+			}
+			if(null==privacy){
+				privacy = (String) list.get(0).get("privacy");
+			}
+			if(null==diary_privacy){
+				diary_privacy = (String) list.get(0).get("diary_privacy");
+			}
 			userDao.updateUser(u_id, name, email, homePage, avatar, info,privacy,diary_privacy);
 			res = JsonUtil.toJSONObject(0, "SUCCESS");
 			return res.toJSONString();

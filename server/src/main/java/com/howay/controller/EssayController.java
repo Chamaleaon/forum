@@ -79,8 +79,8 @@ public class EssayController {
 	 */
 	@CrossOrigin
 	@RequestMapping(value = "/all", method = { RequestMethod.POST })
-	public String getAll() {
-		List<Map<String, Object>> list = essayDao.getAll();
+	public String getAll(@RequestBody JSONObject req) {
+		List<Map<String, Object>> list = essayDao.getAll(req.getString("type"));
 		JSONArray ja = JsonUtil.toJSONArray(list);
 		JSONObject res = JsonUtil.toJSONObject(0, "SUCCESS");
 		res.put("RES", ja);
@@ -93,7 +93,7 @@ public class EssayController {
 	@CrossOrigin
 	@RequestMapping(value = "/byId", method = { RequestMethod.POST })
 	public String getByID(@RequestBody JSONObject req) {
-		List<Map<String, Object>> list = essayDao.byId(req.getIntValue("id"));
+		List<Map<String, Object>> list = essayDao.byId(req.getIntValue("id"),req.getString("type"));
 		JSONArray ja = JsonUtil.toJSONArray(list);
 		JSONObject res = JsonUtil.toJSONObject(0, "SUCCESS");
 		res.put("RES", ja);

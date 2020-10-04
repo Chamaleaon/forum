@@ -25,7 +25,7 @@ public interface UserDao {
 	@Select("select * from user where name=#{name}")
 	public List<Map<String,Object>> getUserInfo(@Param(value = "name") String name);
 	
-	@Insert("insert into user(name,password,email,homePage,avatar,info) VALUES(#{name},#{password},#{email},#{avatar},#{info})")
+	@Insert("insert into user(name,password,email,homePage,avatar,info) VALUES(#{name},#{password},#{email},#{homePage},#{avatar},#{info})")
 	public int insertUser(
 		@Param(value = "name") String name,
 		@Param(value = "password") String password,
@@ -35,13 +35,13 @@ public interface UserDao {
 		@Param(value = "info") String info
  	);
 
-	@Update("upadte user set password=#{password} where u_id=#{u_id}")
+	@Update("update user set password=#{password} where u_id=#{u_id}")
 	public int updatePassword(
 		@Param(value = "u_id") int u_id,
 		@Param(value = "password") String password
 	);
 
-	@Update("upadte user set name=#{name},email=#{email},homePage=#{homePage},avatar=#{avatar},info=#{info},privacy=#{privacy},diary_privacy=#{diary_privacy} where u_id=#{u_id}")
+	@Update("update user set name=#{name},email=#{email},homePage=#{homePage},avatar=#{avatar},info=#{info},privacy=#{privacy},diary_privacy=#{diary_privacy} where u_id=#{u_id}")
 	public int updateUser(
 		@Param(value = "u_id") int u_id,
 		@Param(value = "name") String name,

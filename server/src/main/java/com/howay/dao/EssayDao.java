@@ -20,11 +20,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface EssayDao {
 
-	@Select("select a.*,b.name as publisher_name from essay a,user b where a.publisher=b.u_id")
-	public List<Map<String,Object>> getAll();
+	@Select("select a.*,b.name as publisher_name from essay a,user b where a.publisher=b.u_id and a.type=#{type}")
+	public List<Map<String,Object>> getAll(@Param(value = "type") String type);
 	
-	@Select("select a.*,b.name as publisher_name from essay a,user b where a.publisher=#{u_id} and a.publisher=b.u_id")
-	public List<Map<String,Object>> byId(@Param(value = "u_id") int u_id);
+	@Select("select a.*,b.name as publisher_name from essay a,user b where a.publisher=#{u_id} and a.publisher=b.u_id and a.type=#{type}")
+	public List<Map<String,Object>> byId(@Param(value = "u_id") int u_id,@Param(value = "type") String type);
 	
 	@Select("select a.*,b.name as publisher_name from essay a,user b where e_id=#{e_id} and a.publisher=b.u_id")
 	public List<Map<String,Object>> byEId(@Param(value = "e_id") int e_id);
