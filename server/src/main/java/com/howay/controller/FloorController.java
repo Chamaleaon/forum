@@ -62,6 +62,7 @@ public class FloorController {
 		int publisher = req.getIntValue("publisher");
 		int level = req.getIntValue("level");
 		String info = req.getString("info");
+		System.out.println("*****:"+publisher);
 		List<Map<String,Object>> list = userDao.getUserInfoById(publisher);
 		List<Map<String,Object>> list2 = essayDao.byEId(essay);
 		if(list.size()>0 && list2.size()>0) { //用户存在且文章存在
